@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cinnamoroll">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RadTech Reviewer — HAU BSRT Intro</title>
+<style>
+:root{
+  --radius: 18px;
+}
+/* ===== THEMES ===== */
+html[data-theme="cinnamoroll"]{
+  --bg: #eaf6ff;
+  --bg2: #d7ecff;
+  --card: #ffffff;
+  --primary: #6cb6e8;
+  --primary-dark: #4a92c9;
+  --accent: #ffd9ec;
+  --accent2: #fff6b7;
+  --text: #2c3e50;
+  --muted: #6f8ba0;
+  --good: #7bd39c;
+  --bad: #ff9aa2;
+  --font-display: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
+  --font-body: 'Quicksand', 'Segoe UI', sans-serif;
+  --mascot: "☁️";
+}
+html[data-theme="hellokitty"]{
+  --bg: #fff0f4;
+  --bg2: #ffe1ea;
+  --card: #ffffff;
+  --primary: #ff6f91;
+  --primary-dark: #e94f77;
+  --accent: #ffd1dc;
+  --accent2: #fff2a8;
+  --text: #55293c;
+  --muted: #a5788a;
+  --good: #8fd694;
+  --bad: #ff8fa3;
+  --font-display: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
+  --font-body: 'Quicksand', 'Segoe UI', sans-serif;
+  --mascot: "🎀";
+}
+html[data-theme="kurumi"]{
+  --bg: #1a0f14;
+  --bg2: #241119;
+  --card: #2b141d;
+  --primary: #b3123f;
+  --primary-dark: #7d0c2c;
+  --accent: #3a1a26;
+  --accent2: #c9a24a;
+  --text: #f5e3e8;
+  --muted: #c78a9c;
+  --good: #57c98a;
+  --bad: #ff4d6d;
+  --font-display: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
+  --font-body: 'Quicksand', 'Segoe UI', sans-serif;
+  --mascot: "🕰️";
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0; min-height:100vh; font-family:var(--font-body);
+  background: linear-gradient(160deg,var(--bg),var(--bg2));
+  color:var(--text);
+  transition: background .4s, color .4s;
+}
+h1,h2,h3,h4{font-family:var(--font-display); margin:.2em 0;}
+button{font-family:var(--font-body); cursor:pointer; border:none;}
+.hidden{display:none !important;}
+
+/* ---------- LOGIN ---------- */
+#loginScreen{
+  min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column;
+  text-align:center; padding:20px;
+}
+.login-card{
+  background:var(--card); border-radius: 28px; padding:36px 30px; width:min(420px,92vw);
+  box-shadow: 0 12px 30px rgba(0,0,0,.15); border:3px solid var(--accent);
+}
+.login-card h1{color:var(--primary-dark); font-size:1.8em;}
+.login-card p{color:var(--muted); font-size:.92em;}
+.login-card input{
+  width:100%; padding:12px 14px; border-radius:14px; border:2px solid var(--accent);
+  font-size:1em; margin:10px 0; background:var(--bg); color:var(--text);
+}
+.big-btn{
+  background:var(--primary); color:#fff; padding:12px 22px; border-radius:16px;
+  font-weight:700; font-size:1em; box-shadow:0 6px 14px rgba(0,0,0,.15);
+}
+.big-btn:hover{background:var(--primary-dark);}
+.profile-list{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0;}
+.profile-chip{
+  background:var(--accent); padding:8px 14px; border-radius:20px; font-weight:700; font-size:.85em;
+  color:var(--text); border:2px solid transparent;
+}
+.profile-chip:hover{border-color:var(--primary);}
+
+/* ---------- APP SHELL ---------- */
+#app{max-width:1100px; margin:0 auto; padding:14px 16px 60px;}
+header.topbar{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  padding:10px 4px 16px;
+}
+.brand{display:flex; align-items:center; gap:10px;}
+.brand-badge{
+  width:46px;height:46px;border-radius:50%; background:var(--primary); color:#fff;
+  display:flex;align-items:center;justify-content:center; font-size:1.4em;
+}
+.brand h1{font-size:1.25em; color:var(--primary-dark); margin:0;}
+.brand small{color:var(--muted); display:block;}
+.topbar-right{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+select, .pill-btn{
+  border-radius:12px; border:2px solid var(--accent); padding:8px 10px; background:var(--card); color:var(--text);
+  font-weight:600;
+}
+.pill-btn{background:var(--accent2); border:none;}
+
+nav.tabs{
+  display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;
+}
+nav.tabs button{
+  background:var(--card); color:var(--text); padding:10px 14px; border-radius:14px;
+  font-weight:700; font-size:.85em; border:2px solid var(--accent); transition:.2s;
+}
+nav.tabs button.active{background:var(--primary); color:#fff; border-color:var(--primary-dark);}
+
+.card{
+  background:var(--card); border-radius:var(--radius); padding:20px; margin-bottom:16px;
+  border:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;}
+.stat{
+  background:var(--accent); border-radius:16px; padding:14px 16px; text-align:center;
+}
+.stat b{font-size:1.6em; display:block; color:var(--primary-dark);}
+.stat span{font-size:.8em; color:var(--muted);}
+
+/* ---------- FLASHCARDS ---------- */
+.deck-picker{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
+.flashcard-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.flashcard{
+  width:min(560px,92vw); height:260px; perspective:1200px; cursor:pointer;
+}
+.flashcard-inner{
+  width:100%; height:100%; position:relative; transition:transform .5s; transform-style:preserve-3d;
+}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
+.face{
+  position:absolute; inset:0; border-radius:22px; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:22px; backface-visibility:hidden; font-size:1.15em; font-weight:600;
+  box-shadow:0 10px 24px rgba(0,0,0,.12); border:3px solid var(--accent);
+}
+.face.front{background:var(--card); color:var(--text);}
+.face.back{background:var(--primary); color:#fff; transform:rotateY(180deg); font-weight:500; font-size:1em; overflow-y:auto;}
+.card-controls{display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
+.mini-btn{padding:9px 16px; border-radius:12px; font-weight:700; background:var(--accent2); color:var(--text);}
+.mini-btn.good{background:var(--good); color:#fff;}
+.mini-btn.bad{background:var(--bad); color:#fff;}
+.progress-bar-track{width:100%; background:var(--accent); border-radius:10px; height:10px; overflow:hidden; margin:8px 0;}
+.progress-bar-fill{height:100%; background:var(--primary);}
+
+/* ---------- QUIZ / EXAM ---------- */
+.q-block{margin-bottom:18px; padding-bottom:14px; border-bottom:2px dashed var(--accent);}
+.q-block:last-child{border-bottom:none;}
+.q-title{font-weight:700; margin-bottom:8px;}
+.opt-label{
+  display:block; background:var(--bg); border:2px solid var(--accent); border-radius:12px;
+  padding:10px 12px; margin:6px 0; cursor:pointer; transition:.15s;
+}
+.opt-label:hover{border-color:var(--primary);}
+.opt-label input{margin-right:8px;}
+.opt-label.correct{background:var(--good); color:#fff; border-color:var(--good);}
+.opt-label.wrong{background:var(--bad); color:#fff; border-color:var(--bad);}
+.timer-ring{
+  width:70px;height:70px;border-radius:50%; display:flex;align-items:center;justify-content:center;
+  font-weight:800; font-size:1.2em; background:conic-gradient(var(--primary) var(--pct,100%), var(--accent) 0);
+  color:var(--primary-dark);
+}
+.explain-box{background:var(--accent); border-radius:12px; padding:10px 14px; margin-top:8px; font-size:.9em;}
+.fill-input{
+  padding:8px 10px; border-radius:10px; border:2px solid var(--accent); font-size:1em; width:220px; background:var(--bg); color:var(--text);
+}
+.result-banner{
+  border-radius:18px; padding:20px; text-align:center; background:var(--accent); margin-bottom:16px;
+}
+.result-banner h2{font-size:2.2em; color:var(--primary-dark); margin:0;}
+
+/* ---------- FEYNMAN ---------- */
+textarea{
+  width:100%; border-radius:12px; border:2px solid var(--accent); padding:10px; font-family:var(--font-body);
+  font-size:1em; background:var(--bg); color:var(--text); resize:vertical;
+}
+.feynman-step{margin-bottom:14px;}
+.feynman-step label{font-weight:700; display:block; margin-bottom:4px;}
+.feynman-entry{background:var(--bg); border-radius:12px; padding:12px; margin-bottom:10px; border-left:5px solid var(--primary);}
+
+/* ---------- PDF NOTES ---------- */
+.pdf-layout{display:flex; gap:16px; flex-wrap:wrap;}
+.pdf-canvas-wrap{position:relative; flex:2; min-width:280px; overflow:auto; max-height:75vh; border:2px solid var(--accent); border-radius:12px; background:#333;}
+.pdf-canvas-wrap canvas{display:block;}
+#pdfHighlightLayer{position:absolute; top:0; left:0; cursor:crosshair;}
+.pdf-side{flex:1; min-width:220px;}
+.pdf-toolbar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; align-items:center;}
+.color-dot{width:22px;height:22px;border-radius:50%; border:2px solid var(--text); cursor:pointer;}
+.color-dot.active{outline:3px solid var(--primary);}
+
+/* ---------- PROGRESS ---------- */
+table{width:100%; border-collapse:collapse; font-size:.9em;}
+th,td{padding:8px 10px; text-align:left; border-bottom:1px solid var(--accent);}
+.bar-row{display:flex; align-items:center; gap:8px; margin:6px 0;}
+.bar-row .label{width:150px; font-size:.8em; color:var(--muted);}
+.bar-track{flex:1; height:14px; background:var(--accent); border-radius:8px; overflow:hidden;}
+.bar-fill{height:100%; background:var(--primary);}
+
+footer.note{text-align:center; color:var(--muted); font-size:.78em; margin-top:30px;}
+.badge{display:inline-block; padding:3px 9px; border-radius:10px; background:var(--accent2); font-size:.72em; font-weight:700; margin-left:6px;}
+
+/* ---------- GUIDED TOUR ---------- */
+#tourOverlay{position:fixed; inset:0; z-index:9999;}
+#tourSpotlight{
+  position:fixed; border-radius:16px; box-shadow: 0 0 0 9999px rgba(20,20,30,.62);
+  transition: top .45s cubic-bezier(.65,0,.35,1), left .45s cubic-bezier(.65,0,.35,1),
+              width .45s cubic-bezier(.65,0,.35,1), height .45s cubic-bezier(.65,0,.35,1);
+  pointer-events:none; animation: tourPulse 1.6s ease-in-out infinite;
+}
+@keyframes tourPulse{
+  0%,100%{ outline: 3px solid var(--primary); outline-offset:2px; }
+  50%{ outline: 3px solid var(--accent2); outline-offset:6px; }
+}
+.tour-card{
+  position:fixed; z-index:10000; width:min(320px,86vw); background:var(--card); color:var(--text);
+  border-radius:20px; padding:18px 20px; box-shadow:0 16px 40px rgba(0,0,0,.35); border:3px solid var(--primary);
+  animation: tourCardIn .35s ease-out;
+}
+@keyframes tourCardIn{ from{opacity:0; transform:translateY(10px) scale(.96);} to{opacity:1; transform:translateY(0) scale(1);} }
+.tour-card h3{margin:2px 0 6px; color:var(--primary-dark);}
+.tour-card p{font-size:.88em; color:var(--text); margin:0 0 12px;}
+.tour-controls{display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;}
+#tourOverlay.centered .tour-card{
+  top:50%; left:50%; transform:translate(-50%,-50%);
+}
+#tourOverlay.centered #tourSpotlight{ opacity:0; box-shadow:0 0 0 9999px rgba(20,20,30,.62); }
+</style>
+</head>
+<body>
+
+<!-- ======================= LOGIN SCREEN ======================= -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div style="font-size:2.4em;" id="loginMascot">☁️</div>
+    <h1>HAU Reviewer Hub</h1>
+    <p>RadTech Intro · Theology101 · 9STS — all in one place<br>Sign in with a nickname to save your progress on this device.</p>
+    <input id="nameInput" placeholder="Type your nickname e.g. KC" maxlength="24">
+    <div><button class="big-btn" onclick="loginOrCreate()">Enter ✨</button></div>
+    <div id="existingProfiles" class="profile-list"></div>
+    <p style="font-size:.72em;">No passwords, no servers — everything stays saved right here in this browser, for free.</p>
+    <hr style="border:none;border-top:2px dashed var(--accent);margin:16px 0;">
+    <p style="font-size:.8em;">Coming from another device? <label class="pill-btn" style="display:inline-block;">📥 Restore backup file<input type="file" accept="application/json" style="display:none" onchange="importUserDataFile(event)"></label></p>
+  </div>
+</div>
+
+<!-- ======================= APP ======================= -->
+<div id="app" class="hidden">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-badge" id="mascotBadge">☁️</div>
+      <div>
+        <h1>HAU Reviewer Hub</h1>
+        <small>Welcome back, <b id="userGreeting">friend</b>! Studying: <b id="subjectGreeting">RadTech Intro</b></small>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <select id="subjectSelect" onchange="setSubject(this.value)" title="Switch reviewer">
+        <option value="radtech">🩻 RadTech Intro (RTINTRO)</option>
+        <option value="theology">✝️ Theology101</option>
+        <option value="sts">⚙️ 9STS</option>
+      </select>
+      <select id="themeSelect" onchange="setTheme(this.value)">
+        <option value="cinnamoroll">☁️ Cinnamoroll Sky</option>
+        <option value="hellokitty">🎀 Hello Kitty Pink</option>
+        <option value="kurumi">🕰️ Kurumi Clockwork</option>
+      </select>
+      <button class="pill-btn" id="tourBtn" onclick="startTour()">🚶 Tour</button>
+      <button class="pill-btn" onclick="logout()">Switch profile</button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav"></nav>
+
+  <main id="sections"></main>
+
+  <footer class="note" id="appFooter">Built for reviewing HAU coursework · Content sourced from your uploaded module slide decks, midterm reviewers, and quiz sheets. Always cross‑check every answer key with your professor — a few items were ambiguous in the original scans.</footer>
+</div>
+
+<!-- ======================= GUIDED TOUR OVERLAY ======================= -->
+<div id="tourOverlay" class="hidden">
+  <div id="tourSpotlight"></div>
+  <div id="tourCard" class="tour-card">
+    <div class="badge" id="tourStepBadge">Step 1/8</div>
+    <h3 id="tourTitle">Welcome!</h3>
+    <p id="tourText">This is your reviewer hub.</p>
+    <div class="tour-controls">
+      <button class="mini-btn" id="tourSkipBtn" onclick="endTour()">Skip tour</button>
+      <div style="display:flex;gap:8px;">
+        <button class="mini-btn" id="tourBackBtn" onclick="tourNav(-1)">⬅ Back</button>
+        <button class="big-btn" id="tourNextBtn" onclick="tourNav(1)">Next ➡</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+/* =======================================================================
+   DATA
+======================================================================= */
+const RADTECH_FLASHCARDS = {
+  "Module 4 – RT as a Profession": [
+    ["Webster's definition of a profession","\"An occupation or calling requiring advanced training and experience in some specific or specialized body of knowledge which provides service to society in that special field.\""],
+    ["Who wrote the 7 criteria of a profession?","William Shepard"],
+    ["Shepard's criterion #1","Must satisfy an indispensable social need and be based on well‑established, socially accepted scientific principles."],
+    ["Shepard's criterion #2","Must demand adequate pre‑professional and cultural training."],
+    ["Shepard's criterion #3","Must demand possession of a body of specialized and systematized training/knowledge."],
+    ["Shepard's criterion #4","Must give evidence of needed skills the public does not possess — partly inherent, partly acquired."],
+    ["Shepard's criterion #5","Must have developed a scientific technique that is the result of tested experience."],
+    ["Shepard's criterion #6","Must require exercise of discretion & judgment as to time/manner of duty (not standardized like piece‑work)."],
+    ["Shepard's criterion #7","Must have group consciousness designed to extend scientific knowledge in technical language."],
+    ["Shepard's criterion #8","Must have enough self‑impelling power to retain members for life (not just a stepping stone)."],
+    ["Shepard's criterion #9","Must recognize obligation to society by insisting members follow an established code of ethics."],
+    ["Definition of a professional Radiologic Technologist","A person who has completed a basic Radiologic Technology program and is licensed in his/her country or state to practice as an RT."],
+    ["Other titles used for a RadTech","Medical Radiation Technologist, Radiographer"],
+    ["Legal basis of the Scope of Practice of RT","R.A. 7431, Sections 4 and 5"],
+    ["What must a person NOT do without PRC registration (RA 7431)?","Use the title \"X‑ray Technologist\"/\"Radiologic Technologist\" or any title implying they are one."],
+    ["What knowledge areas do RTs draw on for their work?","Patient handling, physics, anatomy, physiology, pathology, and radiology."],
+    ["Give 4 sub‑specialty titles within radiologic technology","Nuclear medicine technologist, radiographer, sonographer, radiation therapist"],
+    ["List the 8 imaging modalities from Module 1/4","General Radiography, Sonography, Fluoroscopy, Computed Tomography (CT), Magnetic Resonance Imaging (MRI), Mammography, Nuclear Medicine, Radiation Therapy"]
+  ],
+  "Module 4.1 – History of RT in the Philippines": [
+    ["Who are \"The Magnificent Seven\"?","The 7 pioneer radiologists who organized as a professional group in 1948, forming the nidus of the Philippine Radiological Society."],
+    ["President of the Magnificent Seven","Dr. Paterno Chikiamco"],
+    ["Secretary of the Magnificent Seven","Dr. Ramon Paterno"],
+    ["Name the other 5 members of the Magnificent Seven","Dr. Paulino J. Garcia, Dr. Daniel Ledesma Sr., Dr. Carlos Marquez, Dr. Carlos Vergel De Dios, Dr. Hilario Zialcita"],
+    ["Why is Dr. Chikiamco called the \"Dean of Philippine Radiology\"?","He was the first President of the Philippine College of Radiology and first chairman of the PGH Cancer Institute, created under legislature."],
+    ["When did the Philippine Radiological Society become the Philippine College of Radiology?","August 21, 1970, via a new Constitution & By‑Laws, on Dr. Chikiamco's suggestion."],
+    ["Who was the FIRST Filipina Radiologist?","Dr. Jose Maria Salinas Macaria Roque, of the National Chest Center."],
+    ["Who was the first Filipino X‑ray Technologist?","Felipe Somera — a PGH nurse assigned to Physical Therapy/Radium/X‑ray sections; later became a licensed dentist; retired as X‑ray tech in the 1960s."],
+    ["Who formulated the first X‑ray Technology curriculum (1969) and where did they get the idea?","Norberto Albayda Palomo, with Serafin P. Ocampo, Benjamin Hernandez & Jayne Villarino, after the 4th ISRRT World Congress in Tokyo — patterned from Australia, UK, Singapore & Japan."],
+    ["Who supported the petition to DECS to open the first formal X‑ray Technology education program?","The late Dr. Jose T. Gaffud, senior resident of UP‑PGH Medical Center."],
+    ["Where and when did the first school of X‑ray Technology open?","Family Clinic and Hospital — permit approved Sept 9, 1969; first class of 23 pioneer students started Nov 30, 1969."],
+    ["Curriculum timeline: 1969 → 1973 → 1980 → 1985","1969: 2‑yr X‑ray Technology (XT) → 1973: 3‑yr Associate in Radiologic Technology (ART) → 1980: rapid growth of schools nationwide → 1985: 4‑yr Bachelor of Science in Radiologic Technology (BSRT)"],
+    ["Why did the program expand from ART to BSRT in 1985?","A bachelor's degree became the minimum qualification to teach at college level, aligning RT with programs like BSN."],
+    ["Name the 7 pioneer RT educators","Serafin P. Ocampo (RT‑Instructor), Elsa Aguila (Nurse‑Instructor), Dr. Roberto Reodica (Radiologist‑Professor), Norberto A. Palomo (Principal), Dr. Jose T. Gaffud (Radiologist‑Professor), Engr. Luciano N. Niguidula (Physicist‑Professor), Oscar C. Romero (Legal Officer‑Instructor)"],
+    ["What is BHDT now called?","Center for Device Regulation, Radiation Health, and Research (CDRRHR) — under the DOH."],
+    ["Philippine Society of X‑ray Technicians (PSXRT) — founded & by whom?","May 1954, spearheaded by Sgt. Gilberto V. Palomique"],
+    ["PHISMERT — founded & by whom?","1964, by MSgt. Gilberto V. Palomique, after PSXRT became inactive (1958‑1963)."],
+    ["What 3 societies fused (1973‑1974) to form PART, Inc.?","PHISMERT (Norberto A. Palomo), PSRT (Gilberto V. Palomique), PIRT (Almario G. Lutap)"],
+    ["PART, Inc. first National President (1974‑1975)","Jose L. Cervantes, RRT"],
+    ["PART, Inc. current National President (2024–present)","Ruben N. Lorenzo, RRT"],
+    ["PGSRT, Inc. — founded when, where, by whom?","October 1991, at the Lung Center of the Philippines, by Dolores C. Pambid (PGH), Gregorio Gallardo (UP Health Service) & Venancio Villanueva (LCP), triggered by concerns over the Salary Standardization Law."],
+    ["PFPRT, Inc. — what is it and when conceptualized?","A non‑stock, non‑profit corporation of PRC‑licensed RTs; conceptualized in early 1994 by Dr. Jaime Tomas Jr. when PGSRT and PART discussed merging."],
+    ["What is PADFOCORTi?","Philippine Association of Deans and Faculty of Colleges of Radiologic Technology, Inc. (est. 1998)"],
+    ["ARRT — founding year and original name","Incorporated in 1936 as the American Registry of X‑Ray Technicians; renamed American Registry of Radiologic Technologists ~40 years later after adding Nuclear Medicine & Radiation Therapy exams."],
+    ["ISRRT — founded when? Size today?","Founded 1962; today >90 Member Societies, >86 countries, 500,000+ Society members, 18,000+ Associate Members."],
+    ["Board of Radiologic Technology (BORT) — created when, first chairman?","Created Feb 27, 1992; first Chairman: Fortunato C. Gabon Jr."],
+    ["When were the RT exam/registration/licensure rules promulgated?","September 20, 1993"],
+    ["Who signed RA 7431 into law, and who were the Speaker/Senate President/PRC Chair at the time?","President Corazon C. Aquino signed it; Ramon V. Mitra Jr. (Speaker of the House), Neptali A. Gonzales (Senate President), Hon. Hermogenes Pobre (PRC Chairman)."],
+    ["What are the 3 action verbs in the Radiologic Technologists' Creed?","SERVE (humanity with fidelity), UPHOLD (dignity/honor/objectives of the profession), RENDER (service without mental reservation)"]
+  ],
+  "Module 4.2 – Grandfather's Clause": [
+    ["What is a \"Grandfather's Clause\"?","Also called a \"legacy clause\" — an exemption letting persons/entities continue activities that were approved BEFORE new rules, regulations, or laws took effect."],
+    ["Why do grandfather's clauses exist in licensure laws?","To recognize the experience & competence of people already practicing before new educational/certification requirements were established."],
+    ["RA 7431 Sec. 17(a) — who is exempt from the licensure exam?","The first members of the Board of Radiologic Technology (Sec. 7‑b)."],
+    ["RA 7431 Sec. 17(b) — who is exempt?","Foreign radiologic technologists invited as visiting/exchange professors/lecturers to recognized schools — IF their home country grants Filipino RTs the same privilege, and they secure a special Board permit."],
+    ["RA 7431 Sec. 17(c) — who is exempt?","Those who, before RA 7431's approval, already passed the DOH proficiency exam for medical radiation technologists (via its Radiation Health Office/Service)."],
+    ["RA 7431 Sec. 17(d) — who is exempt?","Those who passed the Civil Service exam for x‑ray technicians, the private‑sector x‑ray tech exam, or the DOH proficiency exam, AND have 10 years continuous RT practice after passing it."],
+    ["On Ramy Yalung's PRC ID, what is registration no. 0021042?","His own individual RT registration number (not the profession's first‑ever license) — a reminder that each RT gets a unique PRC registry number upon passing/qualifying."]
+  ]
+};
+
+// Fill-in-the-blank bank: {text with ___, answer, hint}
+const RADTECH_FILLBLANK = [
+  {t:"A profession must satisfy an indispensable ___ need.", a:"social", h:"Shepard criterion #1"},
+  {t:"William ___ authored the criteria of a profession.", a:"shepard", h:"surname"},
+  {t:"The scope of practice of Radiologic Technology is found in R.A. 7431 Sections ___ and ___.", a:"4 and 5", h:"two section numbers"},
+  {t:"The \"Magnificent Seven\" organized in the year ___.", a:"1948", h:"post‑liberation"},
+  {t:"The President of the Magnificent Seven was Dr. Paterno ___.", a:"chikiamco", h:"Dean of Philippine Radiology"},
+  {t:"The Philippine Radiological Society was renamed the Philippine College of ___ in 1970.", a:"radiology", h:"one word"},
+  {t:"___ ___ was the first Filipino X‑ray Technologist and later became a licensed dentist.", a:"felipe somera", h:"PGH nurse"},
+  {t:"The first school of X‑ray Technology opened at the ___ ___ in 1969.", a:"family clinic", h:"and Hospital"},
+  {t:"In 1985 the ART program expanded into the 4‑year ___ program.", a:"bsrt", h:"acronym"},
+  {t:"PART, Inc. was formed 1973‑1974 by the fusion of PHISMERT, PSRT, and ___.", a:"pirt", h:"3‑letter acronym"},
+  {t:"ARRT was originally incorporated in 1936 as the American Registry of ___ ___.", a:"x-ray technicians", h:"old name"},
+  {t:"ISRRT was founded in the year ___.", a:"1962", h:"decade of the 60s"},
+  {t:"The Board of Radiologic Technology (BORT) was created on February 27, ___.", a:"1992", h:"year"},
+  {t:"RA 7431 was signed into law by President ___ ___.", a:"corazon aquino", h:"first woman Philippine president"},
+  {t:"A \"Grandfather's Clause\" is also called a ___ clause.", a:"legacy", h:"synonym"},
+  {t:"Under Sec. 17(d), exempted persons need ___ years of continuous RT practice.", a:"10", h:"number"},
+  {t:"___ care refers to services/treatment to maintain or improve health (two words).", a:"health", h:"two-word term"},
+  {t:"A \"bedless hospital\" mainly performs ___ and day surgeries.", a:"ambulatory", h:"outpatient term"},
+  {t:"___ is the specialized care for physical, emotional, social & spiritual needs of the terminally ill in a home‑like setting.", a:"hospice", h:"one word"},
+  {t:"___ is the electronic transmission & remote interpretation of images between RT and radiologist.", a:"teleradiology", h:"tele + ___"}
+];
+
+// Mixed quiz pool for Quizizz-style rapid quiz (drawn from concept content)
+const RADTECH_QUIZBANK = [
+ {q:"Who authored the widely-used 7 criteria that define a profession?", opts:["Florence Nightingale","William Shepard","Wilhelm Röntgen","Marie Curie"], a:1, e:"William Shepard's criteria are the classic checklist used to argue RT is a true profession."},
+ {q:"The legal Scope of Practice of Radiologic Technology comes from which law's sections?", opts:["RA 7431, Sec. 4 & 5","RA 9165, Sec. 11","RA 8981, Sec. 3","RA 1080, Sec. 2"], a:0, e:"RA 7431 Sections 4 and 5 define the scope of practice."},
+ {q:"Who were the President and Secretary of the Magnificent Seven?", opts:["Chikiamco (Pres.) & Paterno (Sec.)","Somera (Pres.) & Palomo (Sec.)","Roque (Pres.) & Garcia (Sec.)","Cervantes (Pres.) & Lorenzo (Sec.)"], a:0, e:"Dr. Paterno Chikiamco was President; Dr. Ramon Paterno was Secretary."},
+ {q:"The Philippine Radiological Society became the Philippine College of Radiology in what year?", opts:["1948","1962","1970","1992"], a:2, e:"August 21, 1970, via new Constitution & By-Laws."},
+ {q:"Who was the first Filipino X-ray Technologist?", opts:["Norberto Palomo","Felipe Somera","Serafin Ocampo","Gilberto Palomique"], a:1, e:"Felipe Somera, a PGH nurse who later became a licensed dentist."},
+ {q:"The first X-ray Technology curriculum (1969) was patterned after schools from which countries?", opts:["USA, Canada, Mexico, Brazil","Australia, UK, Singapore, Japan","China, India, Korea, Vietnam","France, Germany, Spain, Italy"], a:1, e:"Norberto Palomo's team drew from Australia, England, Singapore, and Japan after the 4th ISRRT Congress in Tokyo."},
+ {q:"What degree title used the acronym \"ART\" from 1973-1985?", opts:["Associate in Radiologic Technology","Advanced Radiography Training","Allied Radiologic Technicians","Accredited Radiographer Trainee"], a:0, e:"ART = Associate in Radiologic Technology, a 3-year program."},
+ {q:"BSRT became the standard degree starting what year?", opts:["1969","1973","1980","1985"], a:3, e:"1985 — aligning RT education with 4-year allied health degrees like BSN."},
+ {q:"PART, Inc. was formed by the 1973-74 fusion of which 3 societies?", opts:["PHISMERT, PSRT, PIRT","PSXRT, PGSRT, PFPRT","ARRT, ISRRT, PCR","BORT, DOH, PRC"], a:0, e:"PHISMERT (Palomo), PSRT (Palomique), and PIRT (Lutap) merged."},
+ {q:"ARRT was originally founded (1936) under what name?", opts:["American College of Radiology","American Registry of X-Ray Technicians","American Board of Radiography","American Society of Radiologic Technologists"], a:1, e:"It was renamed American Registry of Radiologic Technologists ~40 years later."},
+ {q:"ISRRT was founded in what year?", opts:["1948","1954","1962","1970"], a:2, e:"ISRRT, 1962 — now covers 86+ countries."},
+ {q:"BORT (Board of Radiologic Technology) was created on:", opts:["Feb 27, 1992","Sept 20, 1993","Aug 21, 1970","May 1954"], a:0, e:"BORT created Feb 27, 1992; rules promulgated Sept 20, 1993."},
+ {q:"Who signed RA 7431 into law?", opts:["Ferdinand Marcos","Corazon C. Aquino","Fidel Ramos","Gloria Macapagal-Arroyo"], a:1, e:"President Corazon C. Aquino signed RA 7431."},
+ {q:"A \"Grandfather's Clause\" is best described as:", opts:["A new stricter licensing rule","An exemption letting prior practitioners continue under old rules","A penalty for late registration","A rule only for foreign RTs"], a:1, e:"Also called a 'legacy clause' — exempts those already practicing before new rules."},
+ {q:"Under RA 7431 Sec. 17(d), how many years of continuous practice are required for exemption?", opts:["5 years","7 years","10 years","15 years"], a:2, e:"10 years continuous practice after passing the earlier Civil Service/DOH proficiency exam."},
+ {q:"What term describes care/services/treatment to maintain or improve health (used for patients)?", opts:["Health care (two words)","Healthcare (one word, industry)","Primary care only","Telehealth"], a:0, e:"\"Health care\" (two words) = the service given to patients; \"Healthcare\" (one word) = the industry/system."},
+ {q:"A \"bedless hospital\" mainly provides:", opts:["Long-term hospitalization","Psychiatric care","Ambulatory and day surgeries","In-patient rehabilitation"], a:2, e:"Bedless = no overnight beds needed — same-day/ambulatory surgery."},
+ {q:"Teleradiology refers to:", opts:["Treating cancer remotely","Electronic transmission & remote interpretation of images","A type of MRI machine","A hospital department"], a:1, e:"Real-time two-way transmission/interpretation of images between RT & radiologist."},
+ {q:"Hospice care is best described as:", opts:["Emergency trauma care","Care for life-threatening illness addressing physical, emotional, social & spiritual needs in a home-like setting","Pediatric vaccination care","Outpatient X-ray screening"], a:1, e:"Hospice = holistic comfort care, often in a home-like setting."},
+ {q:"Which imaging modality uses radiofrequency waves and a strong magnetic field (no ionizing radiation)?", opts:["CT","MRI","Mammography","Fluoroscopy"], a:1, e:"MRI = Magnetic Resonance Imaging, no ionizing radiation."}
+];
+
+// ===================== MOCK EXAM (from the scanned quiz, Module 3-2) =====================
+// Transcribed from the 4-page "Healthcare Environment & Healthcare Organization" quiz sheet.
+// NOTE: a few items (marked "verify") were ambiguous/hard to read on the scan or debatable —
+// double-check these against your professor's official key before trusting the score 100%.
+const RADTECH_MOCKEXAM = [
+{q:"1. Identify the appropriate term that refers to the care, services, or treatment provided to maintain or improve health — used when referring to care provided to patients.", opts:["Health care","Health facility","Healthcare","Primary care","None of the above"], a:0},
+{q:"2. Identify the appropriate term that refers to a system of related and interacting parts, an industry, an organization, or field of endeavor — used when referring to the industry, organizations, or professions.", opts:["Health care","Health facility","Healthcare","Primary care","None of the above"], a:2},
+{q:"3. Identify the term that refers to that which is devoted primarily to the provision of services for diagnosis, treatment, and rehabilitation.", opts:["Community-based healthcare organization","Health Care Professional","Health Facility","Laboratories and Diagnostic Clinics","Pharmacies or drug outlets"], a:2},
+{q:"4. These are licensed facilities where tests are conducted on the human body or on specimens thereof to obtain information about a patient's health status for diagnosis and treatment of diseases.", opts:["Community-based healthcare organization","Health Facility","Health Maintenance Organization (HMO)","Laboratories and Diagnostic Clinics","Primary Health Care"], a:3},
+{q:"5. Identify the type of institution that is built, staffed, and equipped for the diagnosis of disease, and for treatment — both medical and surgical — of the sick and injured.", opts:["Clinic","Hospice","Hospital","Modern Hospital","Rural health unit"], a:2},
+{q:"6. Identify the main function of a \"bedless hospital.\"", opts:["Ambulatory and day surgeries","In-patient rehabilitation","Long-term hospitalization","Psychiatric care"], a:0},
+{q:"7. Determine the core of the healthcare environment.", opts:["Communication","Coordination","Medical Equipment","Motivation","Physicians"], a:4},
+{q:"8. Identify the entity that provides designated healthcare services to its members for a fixed monthly premium.", opts:["Community-based healthcare organization","Health Care Provider Network (HCPN)","Health Facility","Health Maintenance Organization (HMO)","Laboratories and Diagnostic Clinics"], a:3},
+{q:"9. Identify the specialized type of care that addresses the physical, emotional, social, and spiritual needs of those facing a life-threatening illness in a home-like setting.", opts:["Hospice","Mental health facilities","Specialized Hospital","Telemedicine","None of the above"], a:0},
+{q:"10. Identify the term for the electronic transmission and remote interpretation of images via real-time two-way communication between the radiologic technologist and radiologist.", opts:["Telehealth","Telemedicine","Teleradiology","None of the above"], a:2},
+{q:"11. This involves the intentional release of harmful biological agents (viruses, bacteria, toxins) with the aim of causing harm, fear, or disruption among a population.", opts:["Nuclear attack","Chemical attack","Bioterrorism","Radioactive spills"], a:2},
+{q:"12. This refers to a whole-of-society approach that aims to ensure the highest possible level of health and well-being through equitable delivery of health services.", opts:["Primary Care Provider","Primary Care Facility","Health Maintenance Organization (HMO)","Primary Health Care","Primary Care Worker"], a:3},
+{q:"13. (verify) Select the example(s) of a health emergency where there is occurrence or imminent threat of an illness: 1. Nuclear accidents 2. Physical accidents 3. Bioterrorism 4. Radioactive spills", opts:["1 only","2 and 3 only","1, 3, and 4 only","1, 2, 3, 4"], a:2},
+{q:"14. Chernobyl scenario: operator errors + RBMK design flaws → steam explosion → radioactive material released. What is the specific cause of the public health emergency described?", opts:["A nuclear disaster led to a catastrophic health emergency.","An accidental release of toxins from the nuclear reactors led to a catastrophic public health emergency.","A chemical attack led to a catastrophic health emergency.","A biological outbreak led to a catastrophic health emergency."], a:0},
+{q:"15. This domain of preparedness refers to making sure there is a coordinated, effective response to the emergency.", opts:["Information management","Community Resilience","Incident Management","Surge Management"], a:2},
+{q:"16. This domain of preparedness means people are informed and able to take appropriate action in response to an incident.", opts:["Information management","Community Resilience","Bioresilience","Countermeasures and Mitigation"], a:0},
+{q:"17. (verify) Medicaid, CocoLife, Maxicare, and Medicare-type plans are commonly grouped as examples of:", opts:["Health Maintenance Organization (HMO)","Preferred Provider Organization (PPO)","Health Care Provider Network (HCPN)","Primary Provider Organization"], a:0},
+{q:"18. Involved in compounding and/or dispensing and selling of pharmaceutical products directly to patients.", opts:["Pharmacies or drug outlets","Laboratories and Diagnostic Clinics","Dietary unit","None of the above"], a:0},
+{q:"19. Identify the term for practice/education where individuals from two or more professional backgrounds meet, interact, learn together, and collaborate with the physician at the center of care.", opts:["Interprofessional Collaboration","Multidisciplinary Collaboration","Team-based Collaboration","None of the above"], a:0},
+{q:"20. A patient becomes anxious and claustrophobic inside the MRI machine and asks you to stop. What should you do?", opts:["Pause the MRI procedure and talk to the patient.","Proceed with the MRI, ignoring the request, and assure her it will be over soon.","Administer sedation without proper evaluation or consent.","Suggest headphones with loud music to distract her."], a:0},
+{q:"21. A 25-year-old patient had a 30-minute cataract surgery. What instruction will typically be given before discharge from the recovery room?", opts:["Go home and continue post-treatment care, as the procedure does not warrant confinement.","Stay confined to monitor for signs of complications from surgery.","Return to the OR immediately for a second procedure.","No instructions are needed."], a:0},
+{q:"22. Select all that make up the legally constituted governing body of a general hospital: 1. Board of trustees 2. Chief Executive Officer (CEO) 3. Dietary department 4. Nursing department 5. Pharmaceutical department", opts:["1 and 2 only","1, 2, and 3 only","1, 2, 3, and 4 only","1, 2, 3, 4, 5"], a:0},
+{q:"23. Identify the term for any collection of persons, materials, procedures, ideas, or facts arranged and ordered so the combination works toward achieving organizational objectives.", opts:["Healthcare environment","Hospital organization","Organization","Primary health care"], a:2},
+{q:"24. They are responsible for establishing the hospital's mission and its bylaws and strategic policies.", opts:["Board of Trustees","Chief Executive Officer (CEO)","Medical director/directress","The medical staff"], a:0},
+{q:"25. Differentiate a physician from a doctor.", opts:["A doctor is a medical-doctor type of physician; \"doctor\" can also mean anyone with a doctorate, medical or not.","A physician is a medical-doctor type of physician who diagnoses/treats illness; \"doctor\" can refer to anyone with a doctorate-level degree, medical or not.","A physician relates to any person with a doctorate degree; a doctor relates only to medical professionals, in all contexts.","There is no difference; both terms always mean the same profession."], a:1},
+{q:"26. This department works with all departments in the hospital to ensure quality/monitor personnel — handling recruitment, records, etc.", opts:["Accounting","Business services","Finance Department","Human resources","Information services and medical record maintenance"], a:3},
+{q:"27. This department performs support functions that help with diagnosis and treatment, including clinical pathology, radiology, and rehabilitation services.", opts:["Administrative support services","Allied Health Services","Business services","Clinical support services","Nursing services"], a:1},
+{q:"28. Identify the health care professional who helps other doctors diagnose/monitor a patient's illness by producing medical images.", opts:["Radiologic technologists, nurses, and medical doctors collectively","Radiologist","Radiologic technologist","Surgeon","X-ray technologist"], a:2},
+{q:"29. They are responsible for producing high-quality medical images that assist medical specialists and doctors in diagnosing or monitoring a patient's injury or illness.", opts:["Radiologic technologist","Radiologist","Nurse","Surgeon","X-ray technician (untrained)"], a:0},
+{q:"30. This management principle/function refers to a predetermined course of action to accomplish set objectives.", opts:["Organizing","Directing","Planning","Controlling","Coordinating"], a:2},
+{q:"31. This includes putting life into the plan by bringing together the personnel, capital, machinery, and materials to execute the plan.", opts:["Controlling","Directing","Motivating","Organizing","Planning"], a:3},
+{q:"32. This enables a group of people to think together and act together, sharing information, ideas, and knowledge toward a common purpose.", opts:["Communication","Controlling","Coordinating","Directing","Motivating"], a:0},
+{q:"33. This management function ensures that all groups and persons work efficiently, economically, and in harmony.", opts:["Communication","Controlling","Coordinating","Directing","Planning"], a:2},
+{q:"34. What are the two general types of hospitals?", opts:["Government and Private","Government and Public","Public and District","Regional and Private","None of the above"], a:0},
+{q:"35. Recall the type of X-ray machine that is capable of being carried by not more than one able-bodied person.", opts:["Automobile X-ray machine","Mobile X-ray machine","Portable X-ray machine","Transportable X-ray machine","None of the above"], a:2},
+{q:"36. Recall the type of X-ray facility that is permanently mounted on wheels and can be moved with reasonable ease.", opts:["Automobile X-ray machine","Mobile X-ray machine","Portable X-ray machine","Transportable X-ray machine","None of the above"], a:1},
+{q:"37. (verify) Radiologic technologists, radiologists, pharmacists, nurses, and medical doctors all belong to a group of: 1. Healthcare professionals 2. Primary care providers 3. Primary care workers 4. Healthcare facilities", opts:["1 only","1 and 2 only","1, 2, and 3 only","1, 2, 3, 4"], a:0},
+{q:"38. A 70-year-old patient has stage 4 metastatic breast cancer and is now terminally ill; signs of impending death may not be readily recognized. What type of care is needed?", opts:["Curative Care","Mental health care","Palliative Care","Preventive Care"], a:2},
+{q:"39. This defines the purpose of the business/organization, its identity, and its approach to reaching its objectives.", opts:["Mission statement","Objectives statement","Philosophy","Vision statement"], a:0},
+{q:"40. This describes the desired future position of the hospital.", opts:["Future Statement","Mission statement","Philosophy","Vision statement","None of the above"], a:3},
+{q:"41. Identify the statement that does NOT define health.", opts:["A state of complete physical, mental, and social well-being and not merely the absence of disease.","It is the general condition of a person's mind and body.","The act of taking necessary medical procedures to improve a person's well-being.","The condition of the body and the degree to which it is free from illness.","None of the above"], a:2},
+{q:"42. Distinguish which of the following are members of allied health services/units: 1. Physical therapists 2. Nurses 3. Medical technologists 4. Physicians", opts:["2 and 4 only","1, 2, and 3 only","1 and 3 only","1, 2, 3, 4"], a:2},
+{q:"43. Which of the following is responsible for the recruitment, retention, benefits, and compensation of all employees who work in the hospital?", opts:["Administrative Department","Department Chairman","Finance Office","Human Resource Department"], a:3},
+{q:"44. (verify) A radiation therapy patient shows tight clothes/shortness of breath on the treatment couch. Judging Chief RT (A)'s vs Chief RT (B)'s collaborative response style in this situation:", opts:["Chief RT (A) → Coordinating, Chief RT (B) → Micromanaging","Chief RT (A) → Controlling, Chief RT (B) → Micromanaging","Chief RT (A) → Directing, Chief RT (B) → Micromanaging","Chief RT (A) → Micromanaging, Chief RT (B) → Controlling","Chief RT (A) → Motivating, Chief RT (B) → Directing"], a:3},
+{q:"45. Which of the following is/are NOT roles and responsibilities of a radiologic technologist? 1. Operating/maintaining radiographic equipment 2. Acquiring the patient's medical history 3. Accurately positioning patients for diagnostic images 4. Evaluating resulting radiographic images 5. Ensuring patient safety re: exposure 6. Discussing initial findings/diagnosis with the patient", opts:["1, 2, 3 and 4 only","1, 3, and 4 only","2, 5, and 6 only","5 and 6 only","6 only"], a:4},
+{q:"46. Distinguish micromanaging from controlling as applied to management practice.", opts:["Micromanaging focuses on objectives/quality/performance targets, while controlling focuses on how employees perform each task.","Micromanaging excessively supervises every detail and limits employee autonomy/independence, while controlling holds people accountable and evaluates whether performance/goal standards are achieved.","Micromanaging is supervising only newly hired employees, while controlling applies to all staff.","Micromanaging promotes accountability and improvement while lowering productivity; controlling does the opposite.","None of the above"], a:1},
+{q:"47. Compare Chief RT (A) — who insists on quality-checking every image, checking every step, and telling subordinates exactly how to do routine/clerical tasks — with Chief RT (B) — who reviews monthly performance reports, compares results to targets, and implements corrective measures when goals aren't met. Which combination correctly labels their management styles?", opts:["Chief RT (A) = Controlling, Chief RT (B) = Micromanaging","Chief RT (A) = Micromanaging, Chief RT (B) = Controlling","Chief RT (A) = Directing, Chief RT (B) = Motivating","Both are micromanaging","Both are controlling"], a:1}
+];
+
+const RADTECH_FEYNMAN_TOPICS = [
+ "Why Radiologic Technology counts as a 'profession' (Shepard's criteria)",
+ "The Scope of Practice under RA 7431 Sec. 4 & 5",
+ "Who the Magnificent Seven were and why they mattered",
+ "How the RT curriculum evolved: XT → ART → BSRT",
+ "The difference between PART, PHISMERT, PGSRT, and PFPRT",
+ "What a Grandfather's Clause is and RA 7431 Sec. 17 exemptions",
+ "The difference between 'health care' and 'healthcare'",
+ "Hospice vs. Palliative vs. Curative care",
+ "Micromanaging vs. Controlling in hospital management",
+ "The management functions: Planning, Organizing, Communication/Directing, Coordinating, Controlling",
+ "Mobile vs. Portable vs. Transportable X-ray machines",
+ "Roles that ARE vs. ARE NOT part of a radiologic technologist's job"
+];
+
+const THEOLOGY_FLASHCARDS = {
+  "HAU as My Second Home": [
+    ["Who is the HAU University President?","Mr. Leopoldo Jaime N. Valdes"],
+    ["Who is the HAU University Chaplain?","Rev. Fr. Mark Anthony M. Torrecarion"],
+    ["Name the two founders of HAU.","Don Juan D. Nepomuceno, a philanthropist/prominent businessman, and Fr. Pedro P. Santos, then parish priest of Angeles and later Archbishop of Nueva Caceres."],
+    ["What was HAU's primary founding purpose?","To offer Catholic education at the secondary level; organized as a non‑stock, non‑profit corporation oriented towards service to the community."],
+    ["List the 5 HAU Core Values.","Christ‑Centeredness, Integrity, Excellence, One Community, Societal Responsibility."],
+    ["What years does the current HAU Vision‑Mission Statement cover?","2023 – 2028"],
+    ["Which HAU core value means being 'witnesses of the person and example of Christ'?","Christ‑Centeredness"],
+    ["What phrase closes the HAU Mission Statement?","\"All these we do for the greater glory of God. Laus Deo Semper!\""]
+  ],
+  "My Faith: What is Doing Theology": [
+    ["What is the focus of Neo‑Scholastic Methodology?","Knowing the contents of faith detached from the local circumstances of people."],
+    ["List the 4 steps of the Neo‑Scholastic method.","1) Presentation of the Church's official teaching/doctrine 2) Proofs from the Bible & Church authorities 3) Speculative elaboration of doctrine 4) Practical application (its least important step)."],
+    ["What years was Vatican II held, and under whose leadership?","1962–1965, under the leadership of Pope John XXIII."],
+    ["What is the 'double thrust' of Vatican II?","Aggiornamento and Ad fontes."],
+    ["Define Aggiornamento.","Italian for 'renewal' — updating the Church's practices/liturgy to be relevant to the modern world (ecumenism, engagement with social issues)."],
+    ["Define Ad fontes.","Latin for 'return to the sources' — remaining faithful to the gospel of Jesus Christ, plus lay empowerment (e.g. altar servers, lectors)."],
+    ["What basic principle underlies the double thrust of Vatican II?","The mutual interaction of the Judeo‑Christian Tradition and culture."],
+    ["Name the Four Essential Documents of Vatican II.","Lumen Gentium, Gaudium et Spes, Sacrosanctum Concilium, Dei Verbum."],
+    ["What does Lumen Gentium mean and cover?","'Light of Nations' — the Dogmatic Constitution of the Church; life of Catholics within the Church."],
+    ["What does Gaudium et Spes mean and cover?","'Joy and Hope' — the Pastoral Constitution of the Church in the Modern World; relationship of the Church with contemporary situations."],
+    ["What does Sacrosanctum Concilium cover?","'Sacred Council' — Constitution on Sacred Liturgy; importance, relevance, and re‑orientation of worship."],
+    ["Why is Dei Verbum the most important of the four documents?","It deals with the relationship between God and people, articulated through the terms revelation and faith."],
+    ["Distinguish revelation from faith (Dei Verbum).","Revelation is God's initiative in the relationship; faith is the human response to God's initiative — mutual and reciprocal, so there is no faith without revelation and vice‑versa."],
+    ["What does 'doing theology' mean (McKim, 1996)?","The process of carrying out theological reflection, articulation, and action."],
+    ["How does theology begin and deepen, per de Mesa (2016)?","It begins with an experience of God and deepens through meditative reflection (damdamin) and systematic reflection (isip)."],
+    ["What is St. Anselm of Canterbury's definition of theology?","'Fides quaerens intellectum' — faith seeking understanding."],
+    ["What are the two poles of theological reflection?","The Judeo‑Christian Tradition and Contemporary Human Experience."],
+    ["What is 'Mabathalang Aral'?","A Filipino term for theology, derived from 'Bathala' (Deity) — the activity/process of doing theology reflecting Filipino faith and experience."],
+    ["What does 'sana kapulutan ng aral' express?","Listening to stories and drawing lessons ('aral') from one's own life experiences."],
+    ["Who said 'ito ang kwentong may kwenta'?","Vermundo Miranda, a Filipino Bible scholar."]
+  ],
+  "Falling & Staying in Love / Intro to the Bible": [
+    ["What are the two constant aspects of the experience of love (de Mesa & Cacho, 2012)?","Falling in love and staying in love."],
+    ["According to Peck (2011), is falling in love an act of the will?","No — it is a strong, involuntary, temporary emotion, not a conscious choice."],
+    ["What does staying in love require, per de Mesa & Cacho?","Deciding and willingness to commit — not only pakiramdam (feeling) but also paninindigan (commitment/resolve)."],
+    ["Name the 3 'Love Stories in the Bible' themes.","Covenant and Relationship, Redemption and Sacrifice, Restoration and Renewal."],
+    ["Which passage exemplifies 'Covenant and Relationship'?","Exodus 19:5‑6 — the covenant establishing a loving relationship with God."],
+    ["Which story exemplifies 'Restoration and Renewal'?","Hosea's marriage to a promiscuous wife (Hosea 1‑3) — God's unwavering love despite human infidelity."],
+    ["What verse is cited as the 'ultimate expression of love'?","John 3:16 — Jesus Christ embodies God's love in human form."],
+    ["What is agape?","The highest of the four Greek types of love — God's immeasurable, unconditional, sacrificial, pure love for humankind."],
+    ["What is eros, and where is it 'reserved' in the Bible?","Sensual/romantic love that seeks to possess its object; the Bible reserves it for marriage."],
+    ["What is storge?","Family love — the natural affectionate bond between parents/children and siblings."],
+    ["What is philia, and what's its Bible example?","Intimate, experience‑based friendship love (from phílos); example: David and Jonathan's bond (1 Samuel 18)."],
+    ["What Filipino term is proposed to better translate agape than 'pag‑ibig'?","Kagandahang‑loob."]
+  ],
+  "A Catechism of the Bible": [
+    ["What 3 things is the Bible described as?","A faith‑book, an account of life turned into text, and an event of community."],
+    ["What is the Latin root of 'Sacred Scripture'?","'Scriber' — meaning inscribed in papyrus by the Scribes."],
+    ["In what sense is the Bible '100% Word of God and 100% Word of Man'?","It is the word of God written by men through the inspiration of the Holy Spirit."],
+    ["Trace the origin of the word 'Bible.'","Byblos (papyrus) → Biblion (scroll/book, plural biblia) → Latin biblia (treated as singular) → St. Jerome's 'bibliotheca divina' (divine library)."],
+    ["What does Nihil Obstat mean, and who gives it?","'Nothing hinders' — given by a Censor Liborum; attests a book has nothing damaging to faith or morals."],
+    ["What does Imprimatur mean, and who gives it?","'Let it be printed' — given by the author's diocesan bishop (or the bishop where the book is published)."],
+    ["What does Imprimi Potest mean, and who gives it?","'It may be printed' — given by the major religious superior, if the author belongs to a religious congregation."],
+    ["How many books are in the Protocanonical Bible, and what's the split?","66 Books = 39 Hebrew Bible + 27 New Testament."],
+    ["How many books are in the Deuterocanonical Bible, and what's the split?","73 Books = 46 (Old Testament) + 27 New Testament."],
+    ["What are Deuterocanonical Old Testament books called by Protestants?","The 'Apocrypha.'"],
+    ["Name the 5 books of the Pentateuch.","Genesis, Exodus, Leviticus, Numbers, Deuteronomy."],
+    ["How many Historical Books are there, and which 4 are 'biblical novellas'?","16 books; Ruth, Tobit, Judith, and Esther."],
+    ["Name the 7 Wisdom Books.","Job, Psalms, Proverbs, Ecclesiastes, Song of Songs, Wisdom, Sirach."],
+    ["How many Prophetic books are there, and what's a prophet's primary role?","18 books; a prophet simply speaks God's truth on God's behalf (not primarily future‑telling)."],
+    ["Name the 7 Deuterocanonical books.","Tobit, Judith, Wisdom, Sirach, Baruch, 1 Maccabees, 2 Maccabees."],
+    ["How many books are in the New Testament, and its main groupings?","27 books — 4 Gospels, Acts, 14 Pauline Epistles, 7 General Epistles, Revelation."],
+    ["Who is Acts of the Apostles attributed to?","St. Luke."],
+    ["Who is the Book of Revelation attributed to?","St. John the Evangelist."]
+  ],
+  "God's Pagpapadama & Kagandahang‑loob": [
+    ["What are Jesus' two greatest commandments?","Love the Lord your God with all your heart, soul, and mind; and love your neighbor as yourself."],
+    ["What did Pope Benedict XVI's 'Deus Caritas Est' declare?","'God is love, and he who abides in love abides in God, and God abides in him' (1 Jn 4:16); we become Christians because we believe in God's love."],
+    ["What did St. James say about faith?","'Faith without practice is empty.'"],
+    ["What did St. Paul say in 1 Corinthians 13:1‑3?","Whatever Christians do, no matter how impressive, is meaningless without love."],
+    ["List the Four Types of Love (Greek).","Eros, Storge, Philia, Agape."],
+    ["What does 'loob' mean, literally?","'The within' — the core of Filipino personhood, a shared self, and the organizing center of feeling (damdamin), thought (isip), and behavior (kilos)."],
+    ["What does 'ganda/maganda' mean per de Mesa & Cacho?","A 'delight‑bringing totality' — the sum total of good traits (katangian), not just pleasant physical appearance."],
+    ["Define Kagandahang‑loob.","A winsome goodness — 'ang kabutihang nakakabighani o nakakaakit' (goodness that captivates people); pure positivity."],
+    ["How is God's Kagandahang‑loob described in Jesus Christ?","Salvific — it transforms, it heals, and it comforts (Cacho & de Mesa, 2012)."],
+    ["What is 'kagandahang walang daya'?","'Goodness without deceit' — a description of God's kagandahang‑loob."],
+    ["Is God's kagandahang‑loob something God 'has' or 'does'?","No — it is identical with the very being of God: 'Love is, quite simply, what God is.'"],
+    ["What is pagpapadama?","The intuitively affective‑cognitive Filipino way of making someone feel what one wants to convey."],
+    ["Why is pagpapadama called 'intuitive' and 'affective‑cognitive'?","Intuitive because it is not rationally calculated; affective‑cognitive because 'dama' combines feeling and thought in the action."],
+    ["In what two ways is God's pagpapadama re‑interpreted as revelation?","(1) God's pagpapadama is relational, and (2) God's pagpapadama is life‑giving."],
+    ["What is 'ginhawa'?","Filipinos' experience of total well‑being, sought amid 'hirap ng buhay' (difficulty in life)."],
+    ["Name the two perspectives on Zoe/salvation.","Redemption‑centered and Creation‑centered."],
+    ["Summarize the Redemption‑centered perspective.","Salvation as liberation/release from sin; humanity (massa damnata) needs to be redeemed through Christ's sacrifice — the 'theology of atonement.'"],
+    ["Summarize the Creation‑centered perspective.","Focuses on the blessings of life — 'original blessing' before 'original sin'; God shares our humanity through Jesus to show that creation is good (Gen 1:31)."],
+    ["Who formulated the 'theology of atonement,' and what's a common misreading of it?","St. Anselm; often misunderstood as Jesus appeasing an angry God — actually a contextualized view of divine compassion within medieval feudal culture."]
+  ]
+};
+
+
+const THEOLOGY_FILLBLANK = [
+  {t:"HAU's founders were Don Juan D. Nepomuceno and Fr. Pedro P. ___.", a:"santos", h:"parish priest, later Archbishop"},
+  {t:"The double thrust of Vatican II is Aggiornamento and Ad ___.", a:"fontes", h:"Latin, 'to the sources'"},
+  {t:"___ is the Italian word for 'renewal.'", a:"aggiornamento", h:"Vatican II term"},
+  {t:"___ ___ is considered the most important of the Four Essential Documents of Vatican II.", a:"dei verbum", h:"Latin for 'Word of God'"},
+  {t:"St. Anselm's definition of theology is 'fides quaerens ___.'", a:"intellectum", h:"'understanding' in Latin"},
+  {t:"'Doing theology' begins with an ___ of God.", a:"experience", h:"noun"},
+  {t:"According to Peck, falling in love is not an act of the ___.", a:"will", h:"one word"},
+  {t:"Staying in love requires not just pakiramdam but also ___.", a:"paninindigan", h:"Filipino term for commitment"},
+  {t:"The highest of the four Greek types of love is ___.", a:"agape", h:"God's love"},
+  {t:"'Nihil ___' means 'nothing hinders.'", a:"obstat", h:"Latin"},
+  {t:"The Protocanonical Bible has ___ books.", a:"66", h:"number"},
+  {t:"The Pentateuch has ___ books.", a:"5", h:"number"},
+  {t:"'Loob' literally means 'the ___.'", a:"within", h:"opposite of 'without'"},
+  {t:"___ is defined as a winsome goodness that captivates people.", a:"kagandahang-loob", h:"Filipino theological term"},
+  {t:"The Creation‑centered perspective emphasizes 'original ___' before original sin.", a:"blessing", h:"one word"}
+];
+
+
+const THEOLOGY_QUIZBANK = [
+ {q:"Who founded Holy Angel University?", opts:["Don Juan D. Nepomuceno & Fr. Pedro P. Santos","Leopoldo Valdes & Mark Torrecarion","Angelo Adriano & Aerith Catap","Vermundo Miranda & Jose Cacho"], a:0, e:"Nepomuceno (philanthropist) and Fr. Santos (parish priest, later Archbishop of Nueva Caceres) founded HAU."},
+ {q:"What is the primary focus of the Neo‑Scholastic methodology?", opts:["Culture‑sensitive theologizing","Knowledge of faith detached from local circumstances","Filipino kagandahang‑loob","Pagpapadama"], a:1, e:"Neo‑Scholasticism focused on doctrine detached from people's local circumstances, before Vatican II shifted this."},
+ {q:"The double thrust of Vatican II consists of which two concepts?", opts:["Aggiornamento and Ad fontes","Lumen Gentium and Dei Verbum","Zoe and ginhawa","Loob and Ganda"], a:0, e:"Aggiornamento (renewal) and Ad fontes (return to the sources) form the double thrust."},
+ {q:"'Return to the sources' describes which Vatican II concept?", opts:["Aggiornamento","Ad fontes","Ecumenism","Pagpapadama"], a:1, e:"Ad fontes is Latin for 'return to the sources.'"},
+ {q:"Which Vatican II document is considered most important, dealing with revelation and faith?", opts:["Lumen Gentium","Gaudium et Spes","Sacrosanctum Concilium","Dei Verbum"], a:3, e:"Dei Verbum articulates the relationship between God and people through revelation and faith."},
+ {q:"'Gaudium et Spes' translates to and deals with:", opts:["Light of Nations; Church life","Joy and Hope; Church in the Modern World","Sacred Council; Liturgy","Word of God; Scripture"], a:1, e:"Gaudium et Spes is the Pastoral Constitution of the Church in the Modern World."},
+ {q:"According to St. Anselm, theology is 'faith seeking understanding,' in Latin:", opts:["fides quaerens intellectum","kagandahang‑loob","mabathalang aral","lubos na ginhawa"], a:0, e:"St. Anselm's classic definition of theology."},
+ {q:"The two poles of theological reflection are:", opts:["Old and New Testament","Judeo‑Christian Tradition and Contemporary Human Experience","Revelation and faith","Loob and ganda"], a:1, e:"Theological reflection is a mutual, critical dialogue between these two poles."},
+ {q:"'Mabathalang Aral' is a Filipino term derived from the root word for:", opts:["love","deity (Bathala)","story","goodness"], a:1, e:"'Bathala' refers to the supreme deity in Filipino thought."},
+ {q:"Falling in love, according to Peck (2011), is best described as:", opts:["a conscious lifelong choice","temporary and not an act of the will","identical to staying in love","a sacrament"], a:1, e:"Peck argues falling in love is a strong, involuntary, temporary emotion."},
+ {q:"Staying in love requires:", opts:["only pakiramdam (feeling)","only paninindigan","both pakiramdam and paninindigan","neither"], a:2, e:"De Mesa & Cacho emphasize love is not only feeling but also commitment."},
+ {q:"The story of Hosea's marriage exemplifies which theme?", opts:["Covenant and Relationship","Redemption and Sacrifice","Restoration and Renewal","The Language of Love"], a:2, e:"Hosea's marriage reflects God's forgiveness and restoration despite infidelity."},
+ {q:"Which type of love is 'reserved for marriage' per the Bible?", opts:["Storge","Philia","Eros","Agape"], a:2, e:"Eros — sensual/romantic love — is reserved for marriage."},
+ {q:"David and Jonathan's bond in 1 Samuel 18 exemplifies:", opts:["Eros","Storge","Philia","Agape"], a:2, e:"Philia describes deep, intimate friendship — like David and Jonathan's."},
+ {q:"The highest of the four Greek types of love, describing God's love, is:", opts:["Eros","Storge","Philia","Agape"], a:3, e:"Agape is God's perfect, unconditional, sacrificial love."},
+ {q:"The Bible is '100% Word of God and 100% Word of Man' because:", opts:["it was dictated word‑for‑word by angels","it was written by men through the inspiration of the Holy Spirit","it has two separate versions","it was translated twice"], a:1, e:"This reflects the Church's teaching on divine inspiration through human authors."},
+ {q:"'Nihil Obstat' means:", opts:["let it be printed","nothing hinders","it may be printed","divine library"], a:1, e:"Nihil Obstat = 'nothing hinders' — given by a Censor Liborum."},
+ {q:"Who gives the 'Imprimatur'?", opts:["Censor Liborum","the author's diocesan bishop","the Pope alone","the major religious superior"], a:1, e:"Imprimatur ('let it be printed') is given by the diocesan bishop."},
+ {q:"How many books are in the Protocanonical Bible?", opts:["66","73","46","27"], a:0, e:"Protocanonical = 39 Hebrew Bible + 27 New Testament = 66 books."},
+ {q:"Deuterocanonical Old Testament books are classified by Protestants as the:", opts:["Torah","Apocrypha","Pentateuch","Gospels"], a:1, e:"Protestants call the Deuterocanonical OT books the 'Apocrypha.'"},
+ {q:"How many books are in the Pentateuch?", opts:["5","7","16","18"], a:0, e:"Genesis, Exodus, Leviticus, Numbers, Deuteronomy."},
+ {q:"Which of these are considered 'biblical novellas' among the Historical Books?", opts:["Genesis, Exodus, Leviticus, Numbers","Ruth, Tobit, Judith, Esther","Isaiah, Jeremiah, Ezekiel, Daniel","Matthew, Mark, Luke, John"], a:1, e:"These four are presented as history but read closer to wisdom‑style novellas."},
+ {q:"How many books are in the New Testament?", opts:["27","46","66","73"], a:0, e:"27 New Testament books."},
+ {q:"The Acts of the Apostles is attributed to:", opts:["St. Paul","St. Luke","St. John","St. Peter"], a:1, e:"St. Luke is traditionally credited as author of Acts."},
+ {q:"The Book of Revelation is attributed to:", opts:["St. Paul","St. Luke","St. John the Evangelist","St. James"], a:2, e:"Revelation is attributed to St. John the Evangelist."},
+ {q:"Jesus' two greatest commandments are love of God and:", opts:["love of self","love of neighbor","love of country","love of Church"], a:1, e:"'Love the Lord your God' and 'love your neighbor as yourself.'"},
+ {q:"'Loob' literally means:", opts:["the without","the within","the body","the spirit"], a:1, e:"Loob = 'the within' — the core of Filipino personhood."},
+ {q:"'Kagandahang‑loob' is best defined as:", opts:["a legal document","a winsome/captivating goodness","a type of penance","a form of prayer"], a:1, e:"A goodness so winsome it captivates and wins people over."},
+ {q:"The Redemption‑centered perspective on salvation regards the world as:", opts:["inherently good","corrupt and corruptive","irrelevant","purely material"], a:1, e:"It's oriented toward evil and sees humanity as needing redemption."},
+ {q:"The Creation‑centered perspective emphasizes:", opts:["original sin","original blessing","massa damnata","theology of atonement"], a:1, e:"Before 'original sin' there was 'original blessing' — creation is good."}
+];
+
+
+const THEOLOGY_MOCKEXAM = [
+{q:"1. Who is the current University President of Holy Angel University?", opts:["Rev. Fr. Mark Anthony Torrecarion","Mr. Leopoldo Jaime N. Valdes","Don Juan D. Nepomuceno","Fr. Pedro P. Santos"], a:1},
+{q:"2. HAU was originally founded to offer Catholic education at what level?", opts:["Elementary","Secondary","Collegiate","Graduate"], a:1},
+{q:"3. Which HAU core value refers to being 'fair, honest, and transparent'?", opts:["Christ‑Centeredness","Integrity","Excellence","Societal Responsibility"], a:1},
+{q:"4. The Neo‑Scholastic methodology's approach to doctrine is best described as:", opts:["Culturally‑rooted and contextual","Detached from the local circumstances of people","Based on pagpapadama","Based on kagandahang‑loob"], a:1},
+{q:"5. Vatican II was held during what years?", opts:["1948‑1954","1962‑1965","1970‑1974","1985‑1990"], a:1},
+{q:"6. Which pope led the Church during Vatican II?", opts:["Pope Benedict XVI","Pope John XXIII","Pope Francis","Pope Paul VI"], a:1},
+{q:"7. Which term means 'renewal' — updating Church practices to be relevant today?", opts:["Ad fontes","Aggiornamento","Ecumenism","Pagpapadama"], a:1},
+{q:"8. Ad fontes involves lay empowerment such as establishing:", opts:["Seminaries","Altar servers and lectors","Universities","Convents"], a:1},
+{q:"9. Which of the Four Essential Documents of Vatican II deals with Sacred Liturgy?", opts:["Lumen Gentium","Gaudium et Spes","Sacrosanctum Concilium","Dei Verbum"], a:2},
+{q:"10. Which document is the Dogmatic Constitution of the Church?", opts:["Lumen Gentium","Gaudium et Spes","Sacrosanctum Concilium","Dei Verbum"], a:0},
+{q:"11. Revelation is defined as:", opts:["The human response to God","God's initiative in the relationship","A synonym for faith","A type of covenant"], a:1},
+{q:"12. 'Doing theology' refers to the process of carrying out:", opts:["Prayer and devotion alone","Theological reflection, articulation, and action","Church liturgy only","Catechism memorization"], a:1},
+{q:"13. St. Anselm defined theology as:", opts:["Faith seeking understanding","Reason without faith","Doctrine without practice","Culture without tradition"], a:0},
+{q:"14. The two poles of theological reflection are the Judeo‑Christian Tradition and:", opts:["The Catholic Catechism","Contemporary Human Experience","Papal Encyclicals","Church Law"], a:1},
+{q:"15. 'Mabathalang Aral' reflects theology rooted in:", opts:["Western scholasticism","Filipino faith and experience","Greek philosophy","Roman law"], a:1},
+{q:"16. Falling in love, per Peck (2011), is:", opts:["A lifelong commitment","Temporary and not an act of the will","The same as staying in love","A sacrament of the Church"], a:1},
+{q:"17. Staying in love requires deciding and:", opts:["Forgetting","Willingness to commit","Avoiding conflict","Isolation"], a:1},
+{q:"18. The Exodus narrative exemplifies which love story theme?", opts:["Covenant and Relationship","Redemption and Sacrifice","Restoration and Renewal","The Language of Love"], a:1},
+{q:"19. The Song of Solomon is described as a poetic expression of:", opts:["Familial love","Marital/romantic love","Divine agape","Friendship"], a:1},
+{q:"20. Which is the highest of the four types of love in the Bible?", opts:["Eros","Storge","Philia","Agape"], a:3},
+{q:"21. The Bible's origin word 'Byblos' refers to:", opts:["Scroll","Papyrus","Codex","Library"], a:1},
+{q:"22. 'Imprimi Potest' is given by:", opts:["The diocesan bishop","A Censor Liborum","The major religious superior","The Pope alone"], a:2},
+{q:"23. The Deuterocanonical Bible totals how many books?", opts:["66","73","46","27"], a:1},
+{q:"24. How many Wisdom Books are there in the Old Testament?", opts:["5","7","16","18"], a:1},
+{q:"25. Which book is NOT one of the 14 Pauline Epistles?", opts:["Romans","Hebrews","Revelation","Philemon"], a:2},
+{q:"26. The 7 General Epistles include all EXCEPT:", opts:["James","1 Peter","Jude","Romans"], a:3},
+{q:"27. 'Loob' as a Filipino concept refers to:", opts:["The outer self","The core of personhood/inner self","A type of prayer","A liturgical object"], a:1},
+{q:"28. 'Ginhawa' expresses Filipinos' experience of:", opts:["Suffering","Total well‑being","Punishment","Isolation"], a:1},
+{q:"29. The Redemption‑centered perspective on salvation was formulated as the 'theology of atonement' by:", opts:["St. Anselm","St. Paul","St. Jerome","St. James"], a:0},
+{q:"30. The Creation‑centered perspective emphasizes 'original blessing' before:", opts:["Original grace","Original sin","Original covenant","Original commandment"], a:1}
+];
+
+
+const THEOLOGY_FEYNMAN_TOPICS = [
+ "Why Neo‑Scholastic methodology differs from post‑Vatican II theologizing",
+ "The double thrust of Vatican II: Aggiornamento and Ad fontes",
+ "The Four Essential Documents of Vatican II and what each covers",
+ "Revelation and faith as mutual, reciprocal concepts",
+ "Falling in love vs. staying in love as constant elements of love",
+ "The Four Types of Love (Eros, Storge, Philia, Agape) and their Bible examples",
+ "Why the Bible is '100% Word of God and 100% Word of Man'",
+ "Protocanonical vs. Deuterocanonical books",
+ "Loob, Ganda, and Kagandahang‑loob as Filipino theological concepts",
+ "Redemption‑centered vs. Creation‑centered views of salvation"
+];
+
+
+const STS_FLASHCARDS = {
+  "Heidegger & Technology as a Way of Revealing": [
+    ["Who is Martin Heidegger?","A 20th‑century German philosopher focused on ontology / the study of 'being' (dasein); continental tradition; stern opposition to positivism and technological world domination."],
+    ["What is Heidegger's famous quote on the essence of technology?","'The essence of technology is by no means technological.'"],
+    ["What text is this topic based on?","Heidegger's 'The Question Concerning Technology' (published 1954 in Vorträge und Aufsätze)."],
+    ["What lecture did Heidegger first develop these themes in?","'The Framework' (Das Gestell), presented Dec 1, 1949, in Bremen — the 2nd of 4 lectures called 'Insight into What Is.'"],
+    ["Name the other 3 lectures in 'Insight into What Is.'","'The Thing' (Das Ding), 'The Danger' (Die Gefahr), 'The Turning' (Die Kehre)."],
+    ["What is the 'instrumental and anthropological' definition of technology?","Technology as a means to a human end, and as a human activity."],
+    ["Name the traditional Four Causes Heidegger revisits.","Causa materialis (matter), Causa formalis (form/shape), Causa finalis (end/purpose), Causa efficiens (the effect‑bringer)."],
+    ["What does Heidegger conclude technology discloses itself as, when traced through causality?","What technology is, represented as a means, discloses itself when instrumentality is traced back to fourfold causality."],
+    ["What is 'bringing‑forth' (poiesis)?","An act of bringing something out of concealment into unconcealment."],
+    ["What is aletheia?","Greek for 'truth' — unclosedness, unconcealedness, disclosure."],
+    ["How does modern technology's revealing differ from poiesis?","It is 'challenging‑forth,' not 'bringing‑forth,' because modern technology is based on modern physics as an exact science."],
+    ["What is 'standing‑reserve'?","Modern technology turns people/things into resources simply available and waiting to be used (e.g. a forester as standing‑reserve for the paper industry)."],
+    ["What is 'Enframing' (Gestell)?","The gathering of that setting‑upon that challenges man to reveal the real in the mode of ordering, as standing‑reserve — itself not technological."],
+    ["Where does the real 'threat' of technology lie, per Heidegger?","Not in lethal machines, but in the essence of technology — enframing may deny humanity a more original revealing / primal truth."],
+    ["What is Heidegger's paradox regarding enframing?","Humanity must navigate the dangerous orientation of enframing, because it is in that same danger that the potential for rescue is found."],
+    ["What does Heidegger present as the way to navigate this paradox?","Art — the artist/poet views the world as it is and as it reveals itself."],
+    ["What is Heidegger's closing statement on questioning?","'For questioning is the piety of thought.'"],
+    ["Distinguish calculative thinking from meditative thinking.","Calculative thinking = ordering nature to control/understand it; meditative thinking = allowing nature to reveal itself without force or violence."]
+  ],
+  "Human Flourishing & De‑development (Hickel)": [
+    ["Whose 'de‑development' framework is discussed?","Jason Hickel's."],
+    ["What is the source article's title?","'Forget \u2018developing\u2019 poor countries, it's time to \u2018de‑develop\u2019 rich countries.'"],
+    ["How much has the global economy grown since 1980, and what happened to poverty?","Grown by 380%, yet poverty (under $5/day) increased by more than 1.1 billion people — 17x the population of Britain."],
+    ["Why are both orthodox and progressive growth approaches 'inadequate,' per Hickel?","Even at current average global consumption, we're overshooting the planet's bio‑capacity by more than 50% each year."],
+    ["How many 'global hectares' can the planet sustainably support per person annually?","1.8 global hectares."],
+    ["What does economist Peter Edward argue rich countries should do?","'Catch down' to more appropriate levels of development, instead of poor countries 'catching up.'"],
+    ["Which country has US‑comparable life expectancy at a fraction of the GDP?","Cuba — GDP per capita ~$6,000, consumption of 1.9 hectares (near the ecological sustainability threshold)."],
+    ["What term does Hickel suggest instead of 'underdeveloped' for low‑consumption, high‑happiness countries?","'Appropriately developed.'"],
+    ["What % of people in middle/high‑income countries believe overconsumption threatens the planet?","70%."],
+    ["Why are terms like 'de‑growth' or 'de‑development' problematic, per Hickel?","They're technically accurate but off‑putting — they clash with the deepest frames people use to think about human progress and life's purpose."],
+    ["What alternative framing does Hickel propose instead of GDP‑driven growth?","'Steady‑state' economics reoriented toward quality instead of quantity — getting rid of GDP as the measure of progress."],
+    ["What book do Robert and Edward Skidelsky write, and what do they propose?","'How Much is Enough?' — proposing interventions like banning advertising, a shorter working week, and a basic income."],
+    ["What is Hickel's ultimatum about consumption?","'Either we slow down voluntarily or climate change will do it for us.'"],
+    ["What is the global crisis of overshoot due to, almost entirely?","Overconsumption in rich countries."]
+  ],
+  "The Good Life — Aristotle": [
+    ["When and where was Aristotle born?","384–322 BC, in Greece."],
+    ["What ethical theory grounds Aristotle's view of a good life?","Virtue ethics — good human life = virtuous life; virtue is conceived as human excellence."],
+    ["What is 'the good life' for Aristotle?","The life of excellence — the main purpose of human existence."],
+    ["What is eudaimonia?","The highest good — happiness, or 'living well.'"],
+    ["What does happiness consist of, according to Aristotle?","Achieving, over a whole lifetime, all the goods (health, wealth, knowledge, friends, etc.) that perfect and enrich human life."],
+    ["Name Aristotle's 3 types of friendship.","Based on utility, based on pleasure/delight, and grounded in virtue."],
+    ["Which type of friendship is most common, per Aristotle?","Friendships based on utility."],
+    ["Which moral virtues does Aristotle exemplify?","Courage, temperance, and liberality."],
+    ["What are the key intellectual virtues, and what do they govern?","Wisdom (governs ethical behavior) and understanding (expressed in scientific endeavor and contemplation)."],
+    ["Name Aristotle's 9 proposed important virtues.","Wisdom, prudence, justice, fortitude, courage, liberality, magnificence, magnanimity, temperance."],
+    ["What is arete?","Excellence, virtue, or 'what something is good for.'"],
+    ["Eudaimonia is activity of the soul in accordance with what?","Arete (excellence/virtue)."],
+    ["What mean does Generosity achieve, as a moral virtue?","A mean between wastefulness and greed."],
+    ["List Aristotle's 5 intellectual virtues.","Episteme (scientific knowledge), Techne (artistic/technical knowledge), Nous (intuitive reason), Phronesis (practical wisdom), Sophia (philosophic wisdom)."]
+  ]
+};
+
+
+const STS_FILLBLANK = [
+  {t:"Martin Heidegger's focus is on the ontology of 'being,' or ___ in German.", a:"dasein", h:"German term"},
+  {t:"'The essence of technology is by no means ___.'", a:"technological", h:"Heidegger's famous quote"},
+  {t:"'The Question Concerning Technology' was published in ___.", a:"1954", h:"year"},
+  {t:"The lecture 'The Framework' was first presented in the city of ___.", a:"bremen", h:"German city"},
+  {t:"'Bringing‑forth' comes from the Greek word ___.", a:"poiesis", h:"Greek term"},
+  {t:"'___' is the Greek word for truth, or unconcealment.", a:"aletheia", h:"Greek term"},
+  {t:"Modern technology's mode of revealing is called '___‑forth.'", a:"challenging", h:"opposite of bringing"},
+  {t:"Heidegger names the essence of modern technology '___' (Gestell).", a:"enframing", h:"English translation of Gestell"},
+  {t:"Heidegger presents ___ as the saving power against the danger of technology.", a:"art", h:"one word"},
+  {t:"Jason Hickel calls for rich countries to 'catch ___' instead of poor countries catching up.", a:"down", h:"opposite of up"},
+  {t:"For Aristotle, the highest good is ___, or happiness.", a:"eudaimonia", h:"Greek term"},
+  {t:"'___' is Aristotle's term for practical wisdom.", a:"phronesis", h:"Greek term"}
+];
+
+
+const STS_QUIZBANK = [
+ {q:"Martin Heidegger's philosophical focus is on the ontology of:", opts:["knowledge","being (dasein)","ethics","government"], a:1, e:"Heidegger's central concern is the study of 'being,' or dasein."},
+ {q:"Heidegger's famous quote states the essence of technology is:", opts:["always technological","by no means technological","purely mechanical","irrelevant to philosophy"], a:1, e:"'The essence of technology is by no means anything technological.'"},
+ {q:"'The Question Concerning Technology' was originally published in what year?", opts:["1927","1949","1954","1977"], a:2, e:"Published 1954 in Vorträge und Aufsätze."},
+ {q:"'The Framework' (Das Gestell) lecture was first presented in what city?", opts:["Berlin","Bremen","Munich","Frankfurt"], a:1, e:"Presented Dec 1, 1949, in Bremen."},
+ {q:"The instrumental and anthropological definition holds that technology is:", opts:["a way of revealing truth only","a means to an end and a human activity","purely destructive","unrelated to causality"], a:1, e:"This is the standard, common‑sense definition Heidegger starts from."},
+ {q:"Which is NOT one of the traditional Four Causes?", opts:["Causa materialis","Causa formalis","Causa finalis","Causa temporalis"], a:3, e:"The four are materialis, formalis, finalis, and efficiens — there is no 'causa temporalis.'"},
+ {q:"'Bringing‑forth' comes from the Greek word:", opts:["techne","poiesis","aletheia","dasein"], a:1, e:"Poiesis = bringing out of concealment into unconcealment."},
+ {q:"Aletheia translates to:", opts:["cause","truth/unconcealment","danger","standing‑reserve"], a:1, e:"Aletheia is the Greek word for truth."},
+ {q:"Modern technology's revealing is best described as:", opts:["bringing‑forth","challenging‑forth","poiesis","meditative thinking"], a:1, e:"Modern technology reveals via 'challenging‑forth,' not 'bringing‑forth.'"},
+ {q:"'Standing‑reserve' refers to:", opts:["a type of causality","resources simply available and waiting to be used","a Vatican II document","an economic policy"], a:1, e:"E.g. a forester as standing‑reserve for the paper industry."},
+ {q:"Heidegger names the essence of modern technology as:", opts:["Poiesis","Gestell (Enframing)","Aletheia","Dasein"], a:1, e:"Gestell, translated as 'Enframing.'"},
+ {q:"Per Heidegger, the real threat of technology lies in:", opts:["lethal machines","its essence (enframing)","its cost","its unpopularity"], a:1, e:"The threat is enframing itself denying a more original revealing."},
+ {q:"Heidegger presents ___ as the way to navigate the paradox of enframing.", opts:["science","art","economics","law"], a:1, e:"Art, through the poet/artist, shows both how the world is and how it reveals itself."},
+ {q:"Heidegger's closing statement is: 'For questioning is the ___ of thought.'", opts:["enemy","piety","danger","end"], a:1, e:"'For questioning is the piety of thought.'"},
+ {q:"Jason Hickel's article calls for rich countries to:", opts:["'develop' further","'de‑develop'","industrialize more","ignore ecological limits"], a:1, e:"Hickel argues rich countries should 'de‑develop' or 'catch down.'"},
+ {q:"Since 1980, global poverty (under $5/day) has increased by about:", opts:["100 million","500 million","over 1.1 billion","10 million"], a:2, e:"That's about 17 times the population of Britain."},
+ {q:"The sustainable resource use per person is estimated at how many global hectares annually?", opts:["0.8","1.8","5.8","10"], a:1, e:"1.8 global hectares per person is the sustainable limit."},
+ {q:"Economist Peter Edward argues rich countries should:", opts:["catch up","catch down","stay the same","expand consumption"], a:1, e:"Rich countries should 'catch down' to more appropriate development levels."},
+ {q:"Cuba is cited as an example of:", opts:["an underdeveloped basket case","appropriately developed / efficient living","a rich country needing to catch down","an example of overconsumption"], a:1, e:"Cuba has US‑comparable life expectancy at a fraction of the income and consumption."},
+ {q:"Hickel argues we should get rid of ___ as a measure of progress.", opts:["literacy rate","GDP","life expectancy","happiness index"], a:1, e:"GDP rewards quantity over quality and doesn't reflect wellbeing."},
+ {q:"'How Much is Enough?' was written by:", opts:["Jason Hickel","Robert and Edward Skidelsky","Martin Heidegger","Aristotle"], a:1, e:"The Skidelskys propose banning advertising, a shorter work week, and a basic income."},
+ {q:"For Aristotle, the good life is the life of:", opts:["pleasure","wealth","excellence","power"], a:2, e:"The good life is the life of excellence (arete)."},
+ {q:"Eudaimonia translates to:", opts:["wealth","happiness/living well","virtue","wisdom"], a:1, e:"Eudaimonia is the highest good — happiness or 'living well.'"},
+ {q:"Which is NOT one of Aristotle's 3 types of friendship?", opts:["utility","pleasure","virtue","obligation"], a:3, e:"Aristotle names utility, pleasure/delight, and virtue — not obligation."},
+ {q:"Aristotle's intellectual virtue meaning 'practical wisdom' is:", opts:["Episteme","Techne","Phronesis","Sophia"], a:2, e:"Phronesis = practical wisdom; Sophia = philosophic wisdom."}
+];
+
+
+const STS_MOCKEXAM = [
+{q:"1. Martin Heidegger's philosophical tradition is best classified as:", opts:["Analytic philosophy","Continental philosophy","Empiricism","Positivism"], a:1},
+{q:"2. Heidegger's famous claim is that the essence of technology is:", opts:["Fully technological","By no means technological","Purely economic","Irrelevant to being"], a:1},
+{q:"3. 'The Question Concerning Technology' was published in Heidegger's book:", opts:["Being and Time","Vorträge und Aufsätze","Introduction to Metaphysics","The Question of Being"], a:1},
+{q:"4. The lecture 'The Framework' (Das Gestell) was first presented in:", opts:["1927","1949","1954","1977"], a:1},
+{q:"5. Under the instrumental/anthropological definition, technology is understood as:", opts:["A means to an end and human activity","Pure art","A form of revelation only","A religious ritual"], a:0},
+{q:"6. Which of the Four Causes refers to 'the matter out of which something is made'?", opts:["Causa formalis","Causa materialis","Causa finalis","Causa efficiens"], a:1},
+{q:"7. Which cause 'brings about the effect that is the finished thing'?", opts:["Causa materialis","Causa formalis","Causa finalis","Causa efficiens"], a:3},
+{q:"8. 'Bringing‑forth' (poiesis) means:", opts:["Concealing truth","Bringing out of concealment into unconcealment","Ordering nature by force","A type of causality only"], a:1},
+{q:"9. 'Aletheia' is the Greek word for:", opts:["Cause","Truth/unconcealment","Danger","Resource"], a:1},
+{q:"10. Modern technology's mode of revealing is called:", opts:["Bringing‑forth","Challenging‑forth","Meditative thinking","Poiesis"], a:1},
+{q:"11. Heidegger's example of a forester as a 'standing‑reserve' illustrates:", opts:["Poiesis","Enframing / resources waiting to be used","Aletheia","The four causes"], a:1},
+{q:"12. Heidegger names the essence of modern technology:", opts:["Dasein","Gestell (Enframing)","Aletheia","Techne"], a:1},
+{q:"13. Per Heidegger, the real danger of technology lies in:", opts:["Lethal machines","Its essence (enframing denying deeper truth)","Its expense","Its unpopularity"], a:1},
+{q:"14. Heidegger presents ___ as a way to navigate the paradox of technology.", opts:["Science","Art","Economics","Law"], a:1},
+{q:"15. Heidegger's closing line is: 'For questioning is the ___ of thought.'", opts:["danger","piety","end","enemy"], a:1},
+{q:"16. Jason Hickel's framework calls for rich countries to:", opts:["Grow further","'De‑develop'/catch down","Colonize more","Reduce healthcare"], a:1},
+{q:"17. Since 1980, the global economy has grown by roughly:", opts:["38%","380%","3.8%","3800%"], a:1},
+{q:"18. The sustainable planetary resource limit is estimated at how many global hectares per person?", opts:["0.8","1.8","8","18"], a:1},
+{q:"19. Economist Peter Edward proposes rich countries should:", opts:["Catch up","Catch down","Expand GDP","Increase advertising"], a:1},
+{q:"20. Which country is cited with comparable US life expectancy at a fraction of the income?", opts:["Cuba","Japan","Germany","Canada"], a:0},
+{q:"21. Hickel argues we should get rid of ___ as a measure of progress.", opts:["Life expectancy","GDP","Literacy rate","Happiness index"], a:1},
+{q:"22. For Aristotle, the good life is the life of:", opts:["Pleasure","Wealth","Excellence","Power"], a:2},
+{q:"23. 'Eudaimonia' is best translated as:", opts:["Wealth","Happiness / living well","Virtue alone","Wisdom alone"], a:1},
+{q:"24. Which is NOT one of Aristotle's three types of friendship?", opts:["Utility","Pleasure","Virtue","Obligation"], a:3},
+{q:"25. 'Phronesis' refers to:", opts:["Scientific knowledge","Artistic/technical knowledge","Practical wisdom","Philosophic wisdom"], a:2}
+];
+
+
+const STS_FEYNMAN_TOPICS = [
+ "Technology as a means to an end vs. technology as a way of revealing",
+ "The Four Causes and how they explain a silver chalice",
+ "Poiesis (bringing‑forth) vs. challenging‑forth",
+ "Standing‑reserve and Enframing (Gestell)",
+ "Why the real danger of technology is its essence, not its machines",
+ "Art as the saving power against the danger of enframing",
+ "Hickel's argument for 'de‑developing' rich countries",
+ "Why GDP is a poor measure of progress, per Hickel",
+ "Aristotle's virtue ethics and eudaimonia",
+ "Aristotle's three types of friendship and five intellectual virtues"
+];
+
+/* =======================================================================
+   SUBJECTS REGISTRY — switch the whole app between reviewers
+======================================================================= */
+const SUBJECTS = {
+  radtech: {
+    key:'radtech', name:'RadTech Intro (RTINTRO)', short:'RadTech', icon:'🩻',
+    tagline:"Module 4 (RT as a Profession), 4.1 (History of RT in the PH), 4.2 (Grandfather's Clause)",
+    FLASHCARDS: RADTECH_FLASHCARDS, FILLBLANK: RADTECH_FILLBLANK, QUIZBANK: RADTECH_QUIZBANK,
+    MOCKEXAM: RADTECH_MOCKEXAM, FEYNMAN_TOPICS: RADTECH_FEYNMAN_TOPICS,
+    examTitle:'Healthcare Environment & Organization',
+    examNote:"47 items transcribed from your quiz sheet. A few items marked <span class=\"badge\">verify</span> were ambiguous on the scan — please confirm those with your professor's key."
+  },
+  theology: {
+    key:'theology', name:'THEOLOGY101 — Judeo‑Christian Tradition & Sacred Scriptures', short:'Theology101', icon:'✝️',
+    tagline:"HAU Midterms: Doing Theology, Vatican II, Falling & Staying in Love, the Bible, Kagandahang‑loob",
+    FLASHCARDS: THEOLOGY_FLASHCARDS, FILLBLANK: THEOLOGY_FILLBLANK, QUIZBANK: THEOLOGY_QUIZBANK,
+    MOCKEXAM: THEOLOGY_MOCKEXAM, FEYNMAN_TOPICS: THEOLOGY_FEYNMAN_TOPICS,
+    examTitle:'Theology 101 Midterm Coverage',
+    examNote:"30 items covering HAU, Vatican II, the Bible's parts, and Kagandahang‑loob theology — built from your midterm reviewer."
+  },
+  sts: {
+    key:'sts', name:'9STS — Science, Technology, and Society', short:'9STS', icon:'⚙️',
+    tagline:"Heidegger's Technology as a Way of Revealing, Hickel's De‑development, Aristotle's Good Life",
+    FLASHCARDS: STS_FLASHCARDS, FILLBLANK: STS_FILLBLANK, QUIZBANK: STS_QUIZBANK,
+    MOCKEXAM: STS_MOCKEXAM, FEYNMAN_TOPICS: STS_FEYNMAN_TOPICS,
+    examTitle:'STS Midterm Coverage',
+    examNote:"25 items covering Heidegger, human flourishing/de‑development, and Aristotle's good life — built from your midterm reviewer."
+  }
+};
+let currentSubject = 'radtech';
+function SUB(){ return SUBJECTS[currentSubject]; }
+
+
+/* =======================================================================
+   STATE / STORAGE HELPERS
+======================================================================= */
+const LS_USERS = "rt_users_v1";
+let currentUser = null;
+
+function getUsers(){ return JSON.parse(localStorage.getItem(LS_USERS) || "[]"); }
+function saveUsers(list){ localStorage.setItem(LS_USERS, JSON.stringify(list)); }
+function userKey(suffix){ return "rt_"+currentUser+"_"+suffix; }
+function getData(suffix, fallback){ const v = localStorage.getItem(userKey(suffix)); return v ? JSON.parse(v) : fallback; }
+function setData(suffix, val){ localStorage.setItem(userKey(suffix), JSON.stringify(val)); }
+
+function loginOrCreate(){
+  const name = document.getElementById('nameInput').value.trim();
+  if(!name){ alert("Type a nickname first! 🎀"); return; }
+  let users = getUsers();
+  if(!users.includes(name)) users.push(name);
+  saveUsers(users);
+  localStorage.setItem("rt_current_user", name);
+  startApp(name);
+}
+function pickProfile(name){ localStorage.setItem("rt_current_user", name); startApp(name); }
+function logout(){ localStorage.removeItem("rt_current_user"); location.reload(); }
+
+function renderExistingProfiles(){
+  const wrap = document.getElementById('existingProfiles');
+  const users = getUsers();
+  wrap.innerHTML = users.length ? "<p style='margin:4px 0;font-size:.8em;color:var(--muted)'>or continue as:</p>" : "";
+  users.forEach(u=>{
+    const chip = document.createElement('button');
+    chip.className='profile-chip'; chip.textContent = u;
+    chip.onclick=()=>pickProfile(u);
+    wrap.appendChild(chip);
+  });
+}
+
+/* =======================================================================
+   THEME
+======================================================================= */
+function setTheme(name){
+  document.documentElement.setAttribute('data-theme', name);
+  const mascots = {cinnamoroll:"☁️", hellokitty:"🎀", kurumi:"🕰️"};
+  document.getElementById('mascotBadge').textContent = mascots[name];
+  document.getElementById('loginMascot').textContent = mascots[name];
+  if(currentUser) setData('theme', name);
+  document.getElementById('themeSelect').value = name;
+}
+
+/* =======================================================================
+   SUBJECT SWITCHER
+======================================================================= */
+function setSubject(key){
+  if(!SUBJECTS[key]) key = 'radtech';
+  currentSubject = key;
+  document.getElementById('subjectSelect').value = key;
+  document.getElementById('subjectGreeting').textContent = SUB().short;
+  document.getElementById('appFooter').innerHTML = `Studying <b>${SUB().name}</b> · ${SUB().tagline} · Always cross‑check every answer key with your professor — a few items may be ambiguous or worth double‑checking.`;
+  if(currentUser) setData('subject', key);
+  // Re-render whichever tab is currently active so it reflects the new subject
+  const activeBtn = document.querySelector('nav.tabs button.active');
+  const activeId = activeBtn ? activeBtn.id.replace('tabbtn-','') : 'dashboard';
+  showSection(activeId);
+}
+
+/* =======================================================================
+   APP BOOTSTRAP
+======================================================================= */
+function startApp(name){
+  currentUser = name;
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('userGreeting').textContent = name;
+  const theme = getData('theme','cinnamoroll');
+  setTheme(theme);
+  buildTabs();
+  setSubject(getData('subject','radtech'));
+  showSection('dashboard');
+  // Auto-launch the guided tour the very first time this profile logs in
+  if(!getData('toured', false)){
+    setTimeout(()=>startTour(), 500);
+    setData('toured', true);
+  }
+}
+
+function buildTabs(){
+  const tabs = [
+    ['dashboard','🏠 Dashboard'],
+    ['flashcards','🗂️ Flashcards'],
+    ['fillblank','✏️ Fill‑in‑the‑Blank'],
+    ['quiz','⚡ Quick Quiz'],
+    ['exam','📝 Mock Exam'],
+    ['feynman','🧠 Feynman Lab'],
+    ['pdf','📄 PDF Notes'],
+    ['progress','📈 My Progress']
+  ];
+  const nav = document.getElementById('tabsNav');
+  nav.innerHTML='';
+  tabs.forEach(([id,label])=>{
+    const b=document.createElement('button');
+    b.textContent=label; b.id='tabbtn-'+id;
+    b.onclick=()=>showSection(id);
+    nav.appendChild(b);
+  });
+}
+
+function showSection(id){
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  const btn = document.getElementById('tabbtn-'+id); if(btn) btn.classList.add('active');
+  const main = document.getElementById('sections');
+  main.innerHTML='';
+  const renderers = {
+    dashboard: renderDashboard, flashcards: renderFlashcardsHome, fillblank: renderFillBlank,
+    quiz: renderQuizHome, exam: renderExamHome, feynman: renderFeynman, pdf: renderPdfNotes, progress: renderProgress
+  };
+  renderers[id]();
+}
+
+/* =======================================================================
+   DASHBOARD
+======================================================================= */
+function renderDashboard(){
+  const progress = getData('progress', []);
+  const attempts = progress.length;
+  const avg = attempts ? Math.round(progress.reduce((s,p)=>s+(p.score/p.total*100),0)/attempts) : 0;
+  const totalCards = Object.values(SUB().FLASHCARDS).reduce((s,d)=>s+d.length,0);
+  const feynman = getData('feynman', []);
+  const main = document.getElementById('sections');
+  const mascot = document.documentElement.getAttribute('data-theme')==='hellokitty'?'🎀':document.documentElement.getAttribute('data-theme')==='kurumi'?'🕰️':'☁️';
+  main.innerHTML = `
+  <div class="card">
+    <h2>Hi ${currentUser}! Ready to review ${SUB().icon} ${SUB().short}? ${mascot}</h2>
+    <p style="color:var(--muted)">${SUB().tagline} — includes a full <b>${SUB().MOCKEXAM.length}‑item mock exam</b>. Studying a different subject? Switch it any time with the <b>📚 Subject</b> picker up top.</p>
+    <div class="grid2">
+      <div class="stat"><b>${totalCards}</b><span>flashcards ready</span></div>
+      <div class="stat"><b>${attempts}</b><span>quiz/exam attempts logged</span></div>
+      <div class="stat"><b>${avg}%</b><span>average score so far</span></div>
+      <div class="stat"><b>${feynman.length}</b><span>Feynman explanations saved</span></div>
+    </div>
+    <button class="pill-btn" style="margin-top:10px" onclick="startTour()">🚶 Take a quick tour of this site</button>
+  </div>
+  <div class="grid2">
+    <div class="card" id="tourFlashcards"><h3>🗂️ Flashcards</h3><p>Flip through key terms & facts.</p><button class="mini-btn" onclick="showSection('flashcards')">Study now</button></div>
+    <div class="card" id="tourFillblank"><h3>✏️ Fill‑in‑the‑Blank</h3><p>Type the missing word to test recall.</p><button class="mini-btn" onclick="showSection('fillblank')">Practice</button></div>
+    <div class="card" id="tourQuiz"><h3>⚡ Quick Quiz (Quizizz‑style)</h3><p>Timed multiple choice, up to 50 questions, instant feedback.</p><button class="mini-btn" onclick="showSection('quiz')">Play</button></div>
+    <div class="card" id="tourExam"><h3>📝 Mock Exam</h3><p>${SUB().MOCKEXAM.length} items — pick your subject above first.</p><button class="mini-btn" onclick="showSection('exam')">Take exam</button></div>
+    <div class="card" id="tourFeynman"><h3>🧠 Feynman Lab</h3><p>Explain a concept simply — find your gaps.</p><button class="mini-btn" onclick="showSection('feynman')">Explain something</button></div>
+    <div class="card" id="tourPdf"><h3>📄 PDF Notes</h3><p>Upload a reviewer PDF, highlight & jot notes.</p><button class="mini-btn" onclick="showSection('pdf')">Open PDF tool</button></div>
+  </div>`;
+}
+
+/* =======================================================================
+   FLASHCARDS
+======================================================================= */
+let fcState = {deck:null, i:0, order:[], known:{}};
+function renderFlashcardsHome(){
+  const main = document.getElementById('sections');
+  const decks = Object.keys(SUB().FLASHCARDS);
+  main.innerHTML = `<div class="card">
+    <h2>🗂️ Flashcards · ${SUB().icon} ${SUB().short}</h2>
+    <p style="color:var(--muted)">Pick a deck, click a card to flip it, then mark whether you knew it.</p>
+    <div class="deck-picker">${decks.map(d=>`<button class="mini-btn" onclick="openDeck('${d.replace(/'/g,"\\'")}')">${d}</button>`).join('')}</div>
+    <div id="deckArea"></div>
+  </div>`;
+}
+function openDeck(deck){
+  fcState.deck = deck;
+  fcState.order = SUB().FLASHCARDS[deck].map((_,i)=>i);
+  fcState.i = 0;
+  fcState.known = getData('known_'+deck, {});
+  renderDeck();
+}
+function renderDeck(){
+  const deck = fcState.deck;
+  const cards = SUB().FLASHCARDS[deck];
+  const idx = fcState.order[fcState.i];
+  const [front, back] = cards[idx];
+  const knownCount = Object.values(fcState.known).filter(v=>v).length;
+  document.getElementById('deckArea').innerHTML = `
+   <h3 style="margin-top:16px">${deck} <span class="badge">${fcState.i+1}/${cards.length}</span></h3>
+   <div class="progress-bar-track"><div class="progress-bar-fill" style="width:${(knownCount/cards.length*100)||0}%"></div></div>
+   <div class="flashcard-wrap">
+     <div class="flashcard" id="fcEl" onclick="this.classList.toggle('flipped')">
+       <div class="flashcard-inner">
+         <div class="face front">${front}</div>
+         <div class="face back">${back}</div>
+       </div>
+     </div>
+     <div class="card-controls">
+       <button class="mini-btn" onclick="fcNav(-1)">⬅ Prev</button>
+       <button class="mini-btn bad" onclick="fcMark(false)">Still learning</button>
+       <button class="mini-btn good" onclick="fcMark(true)">I know this ✔</button>
+       <button class="mini-btn" onclick="fcNav(1)">Next ➡</button>
+       <button class="mini-btn" onclick="fcShuffle()">🔀 Shuffle</button>
+     </div>
+   </div>`;
+}
+function fcNav(dir){ fcState.i = (fcState.i + dir + fcState.order.length) % fcState.order.length; renderDeck(); }
+function fcMark(known){ fcState.known[fcState.order[fcState.i]] = known; setData('known_'+fcState.deck, fcState.known); fcNav(1); }
+function fcShuffle(){ fcState.order.sort(()=>Math.random()-0.5); fcState.i=0; renderDeck(); }
+
+/* =======================================================================
+   FILL IN THE BLANK
+======================================================================= */
+function renderFillBlank(){
+  const main = document.getElementById('sections');
+  main.innerHTML = `<div class="card">
+    <h2>✏️ Fill‑in‑the‑Blank · ${SUB().icon} ${SUB().short}</h2>
+    <p style="color:var(--muted)">Type the missing word(s). Not case‑sensitive.</p>
+    <form id="fbForm">${SUB().FILLBLANK.map((item,i)=>`
+      <div class="q-block">
+        <div class="q-title">${i+1}. ${item.t.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')}</div>
+        <input class="fill-input" data-i="${i}" placeholder="your answer">
+        <span style="font-size:.78em;color:var(--muted)"> hint: ${item.h}</span>
+        <div class="explain-box hidden" id="fbfb-${i}"></div>
+      </div>`).join('')}
+      <button type="button" class="big-btn" onclick="checkFillBlank()">Check my answers</button>
+    </form>
+    <div id="fbResult"></div>
+  </div>`;
+}
+function checkFillBlank(){
+  let score=0;
+  SUB().FILLBLANK.forEach((item,i)=>{
+    const input = document.querySelector(`.fill-input[data-i="${i}"]`);
+    const val = (input.value||"").trim().toLowerCase();
+    const correct = val === item.a.toLowerCase() || item.a.toLowerCase().includes(val) && val.length>2;
+    const box = document.getElementById('fbfb-'+i);
+    box.classList.remove('hidden');
+    if(correct){ score++; input.style.borderColor='var(--good)'; box.textContent="✔ Correct — "+item.a; }
+    else { input.style.borderColor='var(--bad)'; box.textContent="✘ Answer: "+item.a; }
+  });
+  document.getElementById('fbResult').innerHTML = `<div class="result-banner"><h2>${score}/${SUB().FILLBLANK.length}</h2><p>Keep going — repetition builds recall!</p></div>`;
+  logProgress('Fill-in-the-Blank', SUB().short, score, SUB().FILLBLANK.length);
+}
+
+/* =======================================================================
+   QUICK QUIZ (Quizizz style, timed)
+======================================================================= */
+let qzState = {questions:[], i:0, score:0, timer:null, timeLeft:15, answered:false};
+function renderQuizHome(){
+  const main = document.getElementById('sections');
+  main.innerHTML = `<div class="card">
+    <h2>⚡ Quick Quiz — Quizizz style · ${SUB().icon} ${SUB().short}</h2>
+    <p style="color:var(--muted)">Timed multiple choice. Faster correct answers = more points! Question bank has ${SUB().QUIZBANK.length} items — pick up to 50 questions below (it'll reshuffle and repeat once it runs out of fresh ones).</p>
+    <label>How many questions? </label>
+    <select id="qzCount">${quizCountOptions()}</select>
+    <div><button class="big-btn" onclick="startQuiz()">Start Quiz 🚀</button></div>
+    <div id="quizArea"></div>
+  </div>`;
+}
+// Build a select options list: 5,10,15,20,25,30,40,50 (capped/extended sensibly to the bank size)
+function quizCountOptions(){
+  const bankLen = SUB().QUIZBANK.length;
+  let candidates = [5,10,15,20,25,30,40,50];
+  if(!candidates.includes(bankLen)) candidates.push(bankLen);
+  candidates = candidates.filter(c=>c>0).sort((a,b)=>a-b);
+  const defaultVal = candidates.includes(10) ? 10 : candidates[0];
+  return candidates.map(c=>`<option value="${c}" ${c===defaultVal?'selected':''}>${c}${c===bankLen?' (all unique)':''}</option>`).join('');
+}
+// Build a pool of n questions. If n exceeds the bank size, cycle through reshuffled
+// copies of the bank so users can still do a 50-question run on a smaller bank.
+function buildQuizPool(n){
+  const bank = SUB().QUIZBANK;
+  let pool = [];
+  while(pool.length < n){
+    const shuffled = [...bank].sort(()=>Math.random()-0.5);
+    pool = pool.concat(shuffled);
+  }
+  return pool.slice(0, n);
+}
+function startQuiz(){
+  const n = parseInt(document.getElementById('qzCount').value);
+  const pool = buildQuizPool(n);
+  qzState = {questions:pool, i:0, score:0, timer:null, timeLeft:15, answered:false};
+  renderQuizQuestion();
+}
+function renderQuizQuestion(){
+  clearInterval(qzState.timer);
+  qzState.answered=false;
+  qzState.timeLeft=15;
+  const q = qzState.questions[qzState.i];
+  const optOrder = q.opts.map((o,idx)=>({o,idx})).sort(()=>Math.random()-0.5);
+  document.getElementById('quizArea').innerHTML = `
+    <div class="q-block">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span class="badge">Question ${qzState.i+1}/${qzState.questions.length} · Score: ${qzState.score}</span>
+        <div class="timer-ring" id="timerRing" style="--pct:100%">${qzState.timeLeft}</div>
+      </div>
+      <div class="q-title" style="margin-top:10px;">${q.q}</div>
+      <div id="optList">${optOrder.map(({o,idx})=>`<label class="opt-label" onclick="answerQuiz(${idx})">${o}</label>`).join('')}</div>
+      <div id="qzExplain"></div>
+    </div>`;
+  qzState.timer = setInterval(()=>{
+    qzState.timeLeft--;
+    const ring = document.getElementById('timerRing');
+    if(ring){ ring.textContent = qzState.timeLeft; ring.style.setProperty('--pct', Math.max(0,qzState.timeLeft/15*100)+'%'); }
+    if(qzState.timeLeft<=0){ answerQuiz(-1); }
+  },1000);
+}
+function answerQuiz(chosenIdx){
+  if(qzState.answered) return;
+  qzState.answered = true;
+  clearInterval(qzState.timer);
+  const q = qzState.questions[qzState.i];
+  const labels = document.querySelectorAll('#optList .opt-label');
+  labels.forEach(l=>l.onclick=null);
+  labels.forEach(l=>{
+    if(l.textContent === q.opts[q.a]) l.classList.add('correct');
+  });
+  let gotIt=false;
+  if(chosenIdx>=0){
+    const chosenText = q.opts[chosenIdx];
+    labels.forEach(l=>{ if(l.textContent===chosenText && chosenIdx!==q.a) l.classList.add('wrong'); });
+    gotIt = chosenIdx===q.a;
+  }
+  if(gotIt){ qzState.score += 10 + qzState.timeLeft*2; }
+  document.getElementById('qzExplain').innerHTML = `<div class="explain-box">${gotIt?'✅ Correct!':'❌ Not quite.'} ${q.e}</div>
+    <button class="big-btn" style="margin-top:10px" onclick="nextQuizQ()">Next ➡</button>`;
+}
+function nextQuizQ(){
+  qzState.i++;
+  if(qzState.i >= qzState.questions.length){
+    logProgress('Quick Quiz','Mixed topics', qzState.score, qzState.questions.length*30);
+    document.getElementById('quizArea').innerHTML = `<div class="result-banner"><h2>${qzState.score} pts</h2><p>Nice work, ${currentUser}! Try again to beat your score.</p>
+    <button class="big-btn" onclick="renderQuizHome()">Play again</button></div>`;
+  } else { renderQuizQuestion(); }
+}
+
+/* =======================================================================
+   MOCK EXAM
+======================================================================= */
+function renderExamHome(){
+  const main = document.getElementById('sections');
+  main.innerHTML = `<div class="card">
+    <h2>📝 Mock Exam — ${SUB().icon} ${SUB().examTitle}</h2>
+    <p style="color:var(--muted)">${SUB().examNote} Untimed — take your time and really think it through.</p>
+    <p style="font-size:.85em;color:var(--muted)">Studying something else? Use the <b>📚 Subject</b> picker in the top bar to jump to a different reviewer's mock exam.</p>
+    <button class="big-btn" onclick="startExam()">Begin Mock Exam</button>
+    <div id="examArea"></div>
+  </div>`;
+}
+function startExam(){
+  const area = document.getElementById('examArea');
+  area.innerHTML = `<form id="examForm">${SUB().MOCKEXAM.map((q,i)=>`
+    <div class="q-block">
+      <div class="q-title">${q.q} ${q.q.includes('(verify)')?'<span class="badge">verify</span>':''}</div>
+      ${q.opts.map((o,oi)=>`<label class="opt-label"><input type="radio" name="q${i}" value="${oi}"> ${o}</label>`).join('')}
+    </div>`).join('')}
+    <button type="button" class="big-btn" onclick="submitExam()">Submit Exam</button>
+  </form><div id="examResult"></div>`;
+  area.scrollIntoView({behavior:'smooth'});
+}
+function submitExam(){
+  let score=0;
+  SUB().MOCKEXAM.forEach((q,i)=>{
+    const chosen = document.querySelector(`input[name="q${i}"]:checked`);
+    const block = document.querySelectorAll('.q-block')[i];
+    const labels = block.querySelectorAll('.opt-label');
+    labels.forEach((l,oi)=>{
+      if(oi===q.a) l.classList.add('correct');
+      if(chosen && parseInt(chosen.value)===oi && oi!==q.a) l.classList.add('wrong');
+    });
+    if(chosen && parseInt(chosen.value)===q.a) score++;
+  });
+  document.getElementById('examResult').innerHTML = `<div class="result-banner"><h2>${score}/${SUB().MOCKEXAM.length}</h2><p>${Math.round(score/SUB().MOCKEXAM.length*100)}% — scroll up to review every item, correct answers are highlighted green.</p></div>`;
+  logProgress('Mock Exam', SUB().name, score, SUB().MOCKEXAM.length);
+  document.getElementById('examResult').scrollIntoView({behavior:'smooth'});
+}
+
+/* =======================================================================
+   FEYNMAN LAB
+======================================================================= */
+function renderFeynman(){
+  const entries = getData('feynman', []);
+  const main = document.getElementById('sections');
+  main.innerHTML = `<div class="card">
+    <h2>🧠 Feynman Lab</h2>
+    <p style="color:var(--muted)">"If you can't explain it simply, you don't understand it well enough." Pick a topic, explain it like you're teaching a first‑year classmate, then find the gaps.</p>
+    <label>Topic:</label>
+    <select id="feyTopic">${SUB().FEYNMAN_TOPICS.map(t=>`<option>${t}</option>`).join('')}<option>✍️ Custom topic…</option></select>
+    <div id="customTopicWrap" class="hidden" style="margin-top:8px"><input class="fill-input" style="width:100%" id="customTopic" placeholder="Type your own topic"></div>
+    <div class="feynman-step" style="margin-top:14px;">
+      <label>Step 1 — Explain it in plain, simple words (pretend your listener knows nothing about RadTech):</label>
+      <textarea id="fey1" rows="4" placeholder="Explain it like you're talking to a curious friend..."></textarea>
+    </div>
+    <div class="feynman-step">
+      <label>Step 2 — Where did you get stuck, confused, or had to guess?</label>
+      <textarea id="fey2" rows="2" placeholder="Be honest — this is where the real studying happens."></textarea>
+    </div>
+    <div class="feynman-step">
+      <label>Step 3 — Go back, simplify again, and add one analogy:</label>
+      <textarea id="fey3" rows="3" placeholder="e.g. 'A grandfather's clause is like...'"></textarea>
+    </div>
+    <button class="big-btn" onclick="saveFeynman()">Save this reflection</button>
+    <h3 style="margin-top:22px;">Your saved explanations</h3>
+    <div id="feynmanList">${renderFeynmanList(entries)}</div>
+  </div>`;
+  document.getElementById('feyTopic').onchange = e=>{
+    document.getElementById('customTopicWrap').classList.toggle('hidden', e.target.value!=='✍️ Custom topic…');
+  };
+}
+function renderFeynmanList(entries){
+  if(!entries.length) return `<p style="color:var(--muted)">No entries yet — write your first one above!</p>`;
+  return entries.slice().reverse().map((e,i)=>`
+    <div class="feynman-entry">
+      <b>${e.topic}</b> <span class="badge">${e.date}</span>
+      <p style="margin:6px 0 2px"><b>Explanation:</b> ${e.p1}</p>
+      <p style="margin:2px 0"><b>Gap found:</b> ${e.p2||'—'}</p>
+      <p style="margin:2px 0"><b>Simplified + analogy:</b> ${e.p3||'—'}</p>
+    </div>`).join('');
+}
+function saveFeynman(){
+  let topic = document.getElementById('feyTopic').value;
+  if(topic==='✍️ Custom topic…') topic = document.getElementById('customTopic').value.trim() || 'Untitled topic';
+  const p1 = document.getElementById('fey1').value.trim();
+  if(!p1){ alert("Write your explanation first! 🧠"); return; }
+  const entry = {topic, p1, p2:document.getElementById('fey2').value.trim(), p3:document.getElementById('fey3').value.trim(), date:new Date().toLocaleDateString()};
+  const entries = getData('feynman', []);
+  entries.push(entry);
+  setData('feynman', entries);
+  renderFeynman();
+}
+
+/* =======================================================================
+   PDF NOTES (upload, render with pdf.js, highlight + side notes, saved)
+======================================================================= */
+let pdfState = {doc:null, page:1, numPages:1, scale:1.3, fileName:null, drawing:false, startX:0, startY:0, color:'#fff176'};
+function renderPdfNotes(){
+  const main = document.getElementById('sections');
+  main.innerHTML = `<div class="card">
+    <h2>📄 PDF Notes &amp; Highlighter</h2>
+    <p style="color:var(--muted)">Upload any of your module PDFs. Drag on the page to highlight; jot notes per page on the right. Everything saves automatically to this browser under your profile.</p>
+    <input type="file" id="pdfFile" accept="application/pdf" onchange="loadPdf(event)">
+    <div id="pdfViewer" class="hidden">
+      <div class="pdf-toolbar">
+        <button class="mini-btn" onclick="pdfPrevPage()">⬅ Prev page</button>
+        <span id="pdfPageLabel" class="badge">page 1</span>
+        <button class="mini-btn" onclick="pdfNextPage()">Next page ➡</button>
+        <span style="margin-left:10px;">Highlight color:</span>
+        <span class="color-dot active" style="background:#fff176" onclick="setHiColor('#fff176', this)"></span>
+        <span class="color-dot" style="background:#a5d6a7" onclick="setHiColor('#a5d6a7', this)"></span>
+        <span class="color-dot" style="background:#f48fb1" onclick="setHiColor('#f48fb1', this)"></span>
+        <span class="color-dot" style="background:#90caf9" onclick="setHiColor('#90caf9', this)"></span>
+        <button class="mini-btn bad" onclick="clearPageHighlights()">Clear highlights (this page)</button>
+      </div>
+      <div class="pdf-layout">
+        <div class="pdf-canvas-wrap">
+          <canvas id="pdfCanvas"></canvas>
+          <canvas id="pdfHighlightLayer"></canvas>
+        </div>
+        <div class="pdf-side">
+          <h4>Notes for this page</h4>
+          <textarea id="pdfNoteBox" rows="14" placeholder="Type notes about this page here..." onchange="savePdfNote()"></textarea>
+          <p style="font-size:.75em;color:var(--muted)">Notes &amp; highlights are saved per file name + page, per profile.</p>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function pdfKey(){ return `pdfnotes_${pdfState.fileName}_p${pdfState.page}`; }
+async function loadPdf(evt){
+  const file = evt.target.files[0];
+  if(!file) return;
+  pdfState.fileName = file.name;
+  const buf = await file.arrayBuffer();
+  pdfState.doc = await pdfjsLib.getDocument({data:buf}).promise;
+  pdfState.numPages = pdfState.doc.numPages;
+  pdfState.page = 1;
+  document.getElementById('pdfViewer').classList.remove('hidden');
+  renderPdfPage();
+}
+async function renderPdfPage(){
+  const page = await pdfState.doc.getPage(pdfState.page);
+  const viewport = page.getViewport({scale: pdfState.scale});
+  const canvas = document.getElementById('pdfCanvas');
+  canvas.width = viewport.width; canvas.height = viewport.height;
+  const ctx = canvas.getContext('2d');
+  await page.render({canvasContext: ctx, viewport}).promise;
+  const hi = document.getElementById('pdfHighlightLayer');
+  hi.width = viewport.width; hi.height = viewport.height;
+  document.getElementById('pdfPageLabel').textContent = `page ${pdfState.page} / ${pdfState.numPages}`;
+  setupHighlightLayer();
+  redrawHighlights();
+  document.getElementById('pdfNoteBox').value = getData(pdfKey()+"_note", "");
+}
+function setupHighlightLayer(){
+  const hi = document.getElementById('pdfHighlightLayer');
+  hi.onmousedown = e=>{
+    pdfState.drawing = true;
+    const r = hi.getBoundingClientRect();
+    pdfState.startX = e.clientX - r.left; pdfState.startY = e.clientY - r.top;
+  };
+  hi.onmousemove = e=>{
+    if(!pdfState.drawing) return;
+    const r = hi.getBoundingClientRect();
+    const curX = e.clientX - r.left, curY = e.clientY - r.top;
+    redrawHighlights();
+    const ctx = hi.getContext('2d');
+    ctx.globalAlpha=.4; ctx.fillStyle=pdfState.color;
+    ctx.fillRect(Math.min(pdfState.startX,curX), Math.min(pdfState.startY,curY), Math.abs(curX-pdfState.startX), Math.abs(curY-pdfState.startY));
+  };
+  hi.onmouseup = e=>{
+    if(!pdfState.drawing) return;
+    pdfState.drawing=false;
+    const r = hi.getBoundingClientRect();
+    const curX = e.clientX - r.left, curY = e.clientY - r.top;
+    const rect = {x:Math.min(pdfState.startX,curX), y:Math.min(pdfState.startY,curY), w:Math.abs(curX-pdfState.startX), h:Math.abs(curY-pdfState.startY), c:pdfState.color};
+    if(rect.w>4 && rect.h>4){
+      const hs = getData(pdfKey()+"_hi", []);
+      hs.push(rect); setData(pdfKey()+"_hi", hs);
+    }
+    redrawHighlights();
+  };
+}
+function redrawHighlights(){
+  const hi = document.getElementById('pdfHighlightLayer');
+  const ctx = hi.getContext('2d');
+  ctx.clearRect(0,0,hi.width,hi.height);
+  const hs = getData(pdfKey()+"_hi", []);
+  ctx.globalAlpha=.4;
+  hs.forEach(r=>{ ctx.fillStyle=r.c; ctx.fillRect(r.x,r.y,r.w,r.h); });
+}
+function setHiColor(c, el){ pdfState.color=c; document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active')); el.classList.add('active'); }
+function clearPageHighlights(){ setData(pdfKey()+"_hi", []); redrawHighlights(); }
+function savePdfNote(){ setData(pdfKey()+"_note", document.getElementById('pdfNoteBox').value); }
+function pdfPrevPage(){ if(pdfState.page>1){ savePdfNote(); pdfState.page--; renderPdfPage(); } }
+function pdfNextPage(){ if(pdfState.page<pdfState.numPages){ savePdfNote(); pdfState.page++; renderPdfPage(); } }
+
+/* =======================================================================
+   PROGRESS
+======================================================================= */
+function logProgress(mode, topic, score, total){
+  const progress = getData('progress', []);
+  progress.push({mode, topic, score, total, date:new Date().toLocaleString()});
+  setData('progress', progress);
+}
+function renderProgress(){
+  const progress = getData('progress', []).slice().reverse();
+  const main = document.getElementById('sections');
+  main.innerHTML = `<div class="card">
+    <h2>📈 My Progress</h2>
+    <div class="card" style="background:var(--bg);border-style:dashed;">
+      <h4 style="margin-top:0;">🔄 Move to another device</h4>
+      <p style="font-size:.85em;color:var(--muted)">Everything here only lives in this browser. Export a backup file, then import it on your other device (or after clearing your browser) to bring your profile, scores, flashcard progress, Feynman notes, and PDF highlights along.</p>
+      <button class="mini-btn" onclick="exportUserData()">⬇️ Export my data</button>
+      <label class="mini-btn" style="display:inline-block;">⬆️ Import backup file<input type="file" accept="application/json" style="display:none" onchange="importUserDataFile(event)"></label>
+    </div>
+    ${progress.length? `
+    <h4>Score trend (most recent first)</h4>
+    ${progress.slice(0,10).map(p=>`
+      <div class="bar-row">
+        <span class="label">${p.mode}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(p.score/p.total*100)}%"></div></div>
+        <span style="width:60px;text-align:right;font-size:.8em;">${Math.round(p.score/p.total*100)}%</span>
+      </div>`).join('')}
+    <h4 style="margin-top:20px;">Full history</h4>
+    <table><tr><th>Date</th><th>Mode</th><th>Topic</th><th>Score</th></tr>
+    ${progress.map(p=>`<tr><td>${p.date}</td><td>${p.mode}</td><td>${p.topic}</td><td>${p.score}/${p.total}</td></tr>`).join('')}
+    </table>
+    <button class="mini-btn bad" style="margin-top:14px" onclick="clearProgress()">Clear my history</button>
+    ` : `<p style="color:var(--muted)">No attempts logged yet. Try the Quick Quiz or Mock Exam!</p>`}
+  </div>`;
+}
+function clearProgress(){ if(confirm("Clear all saved scores for "+currentUser+"?")){ setData('progress', []); renderProgress(); } }
+
+/* =======================================================================
+   EXPORT / IMPORT (move progress between devices/browsers)
+======================================================================= */
+function exportUserData(){
+  const prefix = "rt_"+currentUser+"_";
+  const out = {username: currentUser, exportedAt: new Date().toISOString(), data:{}};
+  for(let i=0;i<localStorage.length;i++){
+    const k = localStorage.key(i);
+    if(k.indexOf(prefix)===0) out.data[k] = localStorage.getItem(k);
+  }
+  const blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `radtech-reviewer-${currentUser}-backup.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function importUserDataFile(evt){
+  const file = evt.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    let parsed;
+    try{ parsed = JSON.parse(reader.result); }
+    catch(e){ alert("That doesn't look like a valid backup file. 🧐"); return; }
+    if(!parsed || !parsed.username || !parsed.data){ alert("That doesn't look like a valid backup file. 🧐"); return; }
+    Object.entries(parsed.data).forEach(([k,v])=>localStorage.setItem(k, v));
+    let users = getUsers();
+    if(!users.includes(parsed.username)){ users.push(parsed.username); saveUsers(users); }
+    localStorage.setItem("rt_current_user", parsed.username);
+    alert(`Restored progress for "${parsed.username}" 🎉`);
+    location.reload();
+  };
+  reader.readAsText(file);
+}
+
+/* =======================================================================
+   INIT
+======================================================================= */
+/* =======================================================================
+   GUIDED TOUR — a click-through walkthrough of the whole site
+======================================================================= */
+const TOUR_STEPS = [
+  {target:null, title:"👋 Welcome to the HAU Reviewer Hub!", text:"Quick tour — 10 short steps showing you every tool on this site. Click Next to begin, or Skip any time."},
+  {target:'subjectSelect', title:"📚 1. Pick your subject", text:"Switch between RadTech Intro, Theology101, and 9STS here. Every tool below — flashcards, quizzes, exams — instantly reloads with that subject's content."},
+  {target:'tabbtn-dashboard', title:"🏠 2. Dashboard", text:"Your home base. See how many flashcards, quiz attempts, and Feynman notes you've logged for the current subject, at a glance."},
+  {target:'tabbtn-flashcards', title:"🗂️ 3. Flashcards", text:"Flip through key terms deck-by-deck. Click a card to flip it, then mark 'I know this' or 'Still learning' — your progress bar fills in as you go."},
+  {target:'tabbtn-fillblank', title:"✏️ 4. Fill‑in‑the‑Blank", text:"Type the missing word for each item. Not case‑sensitive, and hints are provided if you get stuck."},
+  {target:'tabbtn-quiz', title:"⚡ 5. Quick Quiz", text:"A timed, Quizizz‑style multiple‑choice round. Choose anywhere from 5 up to 50 questions — faster correct answers score more points!"},
+  {target:'tabbtn-exam', title:"📝 6. Mock Exam", text:"A full untimed practice exam for your selected subject. Submit to see every correct answer highlighted green and your wrong picks in red."},
+  {target:'tabbtn-feynman', title:"🧠 7. Feynman Lab", text:"Explain a topic in plain words, note where you got stuck, then simplify again with an analogy — the classic Feynman technique for finding knowledge gaps."},
+  {target:'tabbtn-pdf', title:"📄 8. PDF Notes", text:"Upload any of your reviewer PDFs, drag to highlight passages in 4 colors, and jot notes per page — everything saves automatically."},
+  {target:'tabbtn-progress', title:"📈 9. My Progress", text:"Every quiz/exam attempt is logged here with a score trend and full history. You can also export a backup file to move your progress to another device."},
+  {target:'themeSelect', title:"🎨 10. Themes", text:"Not feeling the vibe? Switch between Cinnamoroll Sky, Hello Kitty Pink, and Kurumi Clockwork any time."},
+  {target:null, title:"🎉 That's everything!", text:"You're all set. Tap '🚶 Tour' in the top bar any time you want to see this walkthrough again. Good luck studying!"}
+];
+let tourStep = 0;
+function startTour(){
+  tourStep = 0;
+  document.getElementById('tourOverlay').classList.remove('hidden');
+  renderTourStep();
+}
+function endTour(){
+  document.getElementById('tourOverlay').classList.add('hidden');
+}
+function tourNav(dir){
+  tourStep += dir;
+  if(tourStep < 0) tourStep = 0;
+  if(tourStep >= TOUR_STEPS.length){ endTour(); return; }
+  renderTourStep();
+}
+function renderTourStep(){
+  const step = TOUR_STEPS[tourStep];
+  const overlay = document.getElementById('tourOverlay');
+  const spotlight = document.getElementById('tourSpotlight');
+  const card = document.getElementById('tourCard');
+  document.getElementById('tourStepBadge').textContent = `Step ${tourStep+1}/${TOUR_STEPS.length}`;
+  document.getElementById('tourTitle').textContent = step.title;
+  document.getElementById('tourText').textContent = step.text;
+  document.getElementById('tourBackBtn').style.visibility = tourStep===0 ? 'hidden' : 'visible';
+  document.getElementById('tourNextBtn').textContent = tourStep===TOUR_STEPS.length-1 ? "Finish 🎉" : "Next ➡";
+
+  const el = step.target ? document.getElementById(step.target) : null;
+  if(!el){
+    overlay.classList.add('centered');
+    spotlight.style.opacity = '0';
+    card.style.top = '50%';
+    card.style.left = '50%';
+    card.style.transform = 'translate(-50%,-50%)';
+  } else {
+    overlay.classList.remove('centered');
+    spotlight.style.opacity = '1';
+    el.scrollIntoView({behavior:'smooth', block:'center'});
+    setTimeout(()=>{
+      const r = el.getBoundingClientRect();
+      const pad = 8;
+      spotlight.style.top = (r.top - pad) + 'px';
+      spotlight.style.left = (r.left - pad) + 'px';
+      spotlight.style.width = (r.width + pad*2) + 'px';
+      spotlight.style.height = (r.height + pad*2) + 'px';
+      // position the card below the target, or above if it would overflow the viewport
+      const cardW = 320, margin = 16;
+      let cardTop = r.bottom + 16;
+      let cardLeft = Math.min(Math.max(r.left, margin), window.innerWidth - cardW - margin);
+      if(cardTop + 180 > window.innerHeight){ cardTop = Math.max(r.top - 190, margin); }
+      card.style.top = cardTop + 'px';
+      card.style.left = cardLeft + 'px';
+      card.style.transform = 'none';
+    }, 260);
+  }
+}
+
+(function init(){
+  renderExistingProfiles();
+  const saved = localStorage.getItem("rt_current_user");
+  if(saved){ startApp(saved); }
+})();
+</script>
+</body>
+</html>
